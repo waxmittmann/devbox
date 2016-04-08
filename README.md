@@ -35,3 +35,7 @@ visible above. Please fix these errors and try again.
   part of ansible provisioning I presume
 - probably move /Workspace to vagrant dir; and link vagrant dir to my local workspaces
   Except any binary-dependent projects, they wouldn't work.
+
+- should work off works for all the roles so I can both either update them or not at
+  my leasure
+  

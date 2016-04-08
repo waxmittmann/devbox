@@ -1,6 +1,21 @@
 # Man, if I had a properly *testable* dev setup, that'd be sweet.
 ---
 - hosts: all
+
+  #~/Install doesn't work as the dir so hard-coding for now; at very least
+  #   should be variable so we could theoretically use a base box w.out /vagrant
+  #   also could just generate dir from root. Let's do that.
+  # Actually I like it better in not a home BUT it should work... happens in
+  #   the zsh role.
+  pre_tasks:
+    - name: Create Install dir where we'll store all our binaries
+      #file: path=/AnsibleInstall state=directory
+      #Not needed
+      file: path=/AnsibleInstall state=directory
+    - name: Create Java dir inside Install dir where we'll store all our binaries
+      file: path=/AnsibleInstall/Java state=directory
+      #file: path=/AnsibleInstall/Java state=directory
+
   roles:
     # Two options here;
     #
@@ -10,11 +25,13 @@
     #
     # Option 2) Keep as git repo so it updates, but then might break stuff if
     #   it's doing something unexpected.
-    - { role: ansible-role-intellij, intellij_version: 2016.1.1 }
-    - role: ansible-oracle-java
-    - role: ansible-role-scala
+    - { role: ansible-role-intellij, intellij_version: 2016.1.1, intellij_tmp: /AnsibleInstall/IntelliJ.deb }
+    - { role: ansible-oracle-java, java_download_path: /AnsibleInstall/Java }
+    - { role: ansible-role-scala, scala_sbt_tmp_deb: /AnsibleInstall/sbt.deb}
+    - ansible-ohmyzsh
     #role: foo_app_instance, dir: '/opt/a',  app_port: 5000
   sudo: true
+
   tasks:
     #Install update apt stuff
     - name: add atom path to repo
@@ -33,6 +50,12 @@
     #DB and standard stuff
     - name: install mysql
       apt: name=mysql-server state=present force=yes
+    - name: install git
+      apt: name=git state=present force=yes
+    - name: install tilda (console replacement)
+      apt: name=tilda state=present force=yes
+    - name: install vagrant
+      apt: name=vagrant state=present force=yes
 
     #Create my standard directory structure; there's a role in creating the work
     #space and then pulling all your projects.
