@@ -2,7 +2,18 @@
 ---
 - hosts: all
   roles:
-    - ansible-role-intellij
+    # Two options here;
+    #
+    # Option 1) make these *not* auto-git dirs so they are commited,
+    # update manually. Then we know the state. But if role breaks, we won't
+    # get update.
+    #
+    # Option 2) Keep as git repo so it updates, but then might break stuff if
+    #   it's doing something unexpected.
+    - { role: ansible-role-intellij, intellij_version: 2016.1.1 }
+    - role: ansible-oracle-java
+    - role: ansible-oracle-scala
+    #role: foo_app_instance, dir: '/opt/a',  app_port: 5000
   sudo: true
   tasks:
     #Install update apt stuff
@@ -11,7 +22,7 @@
     - name: update apt cache
       apt: update_cache=yes
 
-    #Install atom
+    #Install atom; how do we import settings for this and other stuff automatically?
     - name: install atom
       apt: name=atom state=present force=yes
 
@@ -19,13 +30,24 @@
     #curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
     #sudo apt-get install -y nodejs
 
-    #Left-over crud, probs remove
-    - name: install apache
-      apt: name=apache2 state=present force=yes
+    #DB and standard stuff
     - name: install mysql
       apt: name=mysql-server state=present force=yes
-    - name: install php
-      apt: name=php5 state=present force=yes
 
+    #Create my standard directory structure; there's a role in creating the work
+    #space and then pulling all your projects.
+    - name: Create Workspaces top-level dir
+      file: path={{ ansible_env.HOME }}/Workspaces state=directory
+    - name: Create Scala workspace subdir
+      file: path={{ ansible_env.HOME }}/Workspaces/Scala state=directory
+    - name: Create Java workspace subdir
+      file: path={{ ansible_env.HOME }}/Workspaces/Java state=directory
+    - name: Create Javascript workspace subdir
+      file: path={{ ansible_env.HOME }}/Workspaces/Javascript state=directory
+    - name: Create Web workspace subdir
+      file: path={{ ansible_env.HOME }}/Workspaces/Web state=directory
+      #How could we safely get our notes in here automatically?
+    - name: Create Notes workspace subdir where we keep our notes
+      file: path={{ ansible_env.HOME }}/Notes state=directory
 
       #It could open everything and then create a screenshot at the end for testing!
