@@ -1,0 +1,31 @@
+# Man, if I had a properly *testable* dev setup, that'd be sweet.
+---
+- hosts: all
+  roles:
+    - ansible-role-intellij
+  sudo: true
+  tasks:
+    #Install update apt stuff
+    - name: add atom path to repo
+      apt_repository: repo='ppa:webupd8team/atom' state=present
+    - name: update apt cache
+      apt: update_cache=yes
+
+    #Install atom
+    - name: install atom
+      apt: name=atom state=present force=yes
+
+    #Install npm (will have to download somewhere and setup)
+    #curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+    #sudo apt-get install -y nodejs
+
+    #Left-over crud, probs remove
+    - name: install apache
+      apt: name=apache2 state=present force=yes
+    - name: install mysql
+      apt: name=mysql-server state=present force=yes
+    - name: install php
+      apt: name=php5 state=present force=yes
+
+
+      #It could open everything and then create a screenshot at the end for testing!
