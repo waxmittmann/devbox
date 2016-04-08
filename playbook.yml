@@ -12,7 +12,7 @@
     #   it's doing something unexpected.
     - { role: ansible-role-intellij, intellij_version: 2016.1.1 }
     - role: ansible-oracle-java
-    - role: ansible-oracle-scala
+    - role: ansible-role-scala
     #role: foo_app_instance, dir: '/opt/a',  app_port: 5000
   sudo: true
   tasks:
