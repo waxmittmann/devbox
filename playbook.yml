@@ -9,12 +9,19 @@
   #   the zsh role.
   pre_tasks:
     - name: Create Install dir where we'll store all our binaries
-      #file: path=/AnsibleInstall state=directory
-      #Not needed
       file: path=/AnsibleInstall state=directory
     - name: Create Java dir inside Install dir where we'll store all our binaries
       file: path=/AnsibleInstall/Java state=directory
-      #file: path=/AnsibleInstall/Java state=directory
+    #Would love to do this not cludgy; one way would be to have the base box
+    #just have it, but meh. Even betterer would be to figure out how to just
+    #force installation of dependencies.
+    - name: Install openjdk-6, which other stuff will otherwise complain about
+      #shell: sudo apt-get install openjdk-6-jre
+      shell: yes 'Y' | apt-get install openjdk-6-jre
+      ignore_errors: yes
+    #Urm, top doesn't fail anymore, don't need?
+    - name: ...which will fail, so we will need to install the dependencies
+      shell: yes 'Y' | sudo apt-get -f install
 
   roles:
     # Two options here;
