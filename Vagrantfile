@@ -18,6 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Changed this to 8090, double-check later
   config.vm.network "forwarded_port", guest: 80, host: 8090
 
+  config.ssh.forward_agent = true
+
   # To ignore the ssl errors through proxy
   config.vm.box_download_insecure = true
 

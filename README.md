@@ -20,6 +20,8 @@ Kinda mostly working 0.0.1 of my devbox with things (I) like:
   Except any binary-dependent projects, they wouldn't work.
 
 ### Error-ish todos:
+- Workspaces dir creation doesn't work (guessing the ansible user is special root user?)
+
 - A bunch of stuff fails because of java 6 deps, so I'm manually cludging those at the beginning but I don't love that.
 
 - Unresolved, pops up sometimes:
