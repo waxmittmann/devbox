@@ -11,7 +11,7 @@ Kinda mostly working 0.0.1 of my devbox with things (I) like:
 
 ## Todos
 ### Feature-ish todos:
-- copy in my custom zsh profile (probs nicest from a repo itself)
+- copy in my custom zsh profile (repo here: https://github.com/waxmittmann/my-zsh-profile.git)
 
 ### Implementation-detail-ish todos:
 - definitely want to look at ways to source the stuff locally second time around, a lot of stuff gets deleted that could be reused, all the stuff that runs as part of ansible provisioning I presume
