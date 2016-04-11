@@ -1,43 +1,27 @@
 # devbox
-*Te-he-he, making this from inside my devbox. Boxception*
-
-This will be my ubuntu devbox ...
-... fresh like freshly minted pillows.
-Is that a thing? In hotels it sort of is, right?
-
+Kinda mostly working 0.0.1 of my devbox with things (I) like:
+- IntelliJ CE
+- zsh + oh-my-zsh
+- git
+- JDK8 + Scala
+- Atom
+- vagrant
+- tilda (terminal replacement)
+- mysql
 
 ## Todos
-- check that everything works; we got a scala error, but then i was installed! (I think)
-  And the manual install worked fine.
-  Error was:
-```{r, engine='bash', count_lines}
-  ==> default: Running provisioner: ansible...
-    default: Running ansible-playbook...
-[DEPRECATION WARNING]: Instead of sudo/sudo_user, use become/become_user and
-make sure become_method is 'sudo' (default). This feature will be removed in a
-future release. Deprecation warnings can be disabled by setting
-deprecation_warnings=False in ansible.cfg.
-ERROR! the role 'ansible-oracle-scala' was not found in /Users/wittmma/Workspaces/cba/vagrant/ansible-vagrant/roles:/Users/wittmma/Workspaces/cba/vagrant/ansible-vagrant:/usr/local/etc/ansible/roles
+### Feature-ish todos:
+- copy in my custom zsh profile (probs nicest from a repo itself)
 
-The error appears to have been in '/Users/wittmma/Workspaces/cba/vagrant/ansible-vagrant/playbook.yml': line 15, column 7, but may
-be elsewhere in the file depending on the exact syntax problem.
+### Implementation-detail-ish todos:
+- definitely want to look at ways to source the stuff locally second time around, a lot of stuff gets deleted that could be reused, all the stuff that runs as part of ansible provisioning I presume
 
-The offending line appears to be:
-
-    - role: ansible-oracle-java
-    - role: ansible-oracle-scala
-      ^ here
-
-Ansible failed to complete successfully. Any error output should be
-visible above. Please fix these errors and try again.
-```
-
-- definitely want to look at ways to source the stuff locally second time around,
-  a lot of stuff gets deleted that could be reused, all the stuff that runs as
-  part of ansible provisioning I presume
-- probably move /Workspace to vagrant dir; and link vagrant dir to my local workspaces
+- probably move /Workspace to vagrant dir; and link vagrant dir to my local workspaces.
   Except any binary-dependent projects, they wouldn't work.
 
-- should work off works for all the roles so I can both either update them or not at
-  my leasure
-  
+### Error-ish todos:
+- A bunch of stuff fails because of java 6 deps, so I'm manually cludging those at the beginning but I don't love that.
+
+- Unresolved, pops up sometimes:
+TASK [add atom path to repo] ***************************************************
+fatal: [default]: FAILED! => {"changed": false, "failed": true, "msg": "Failed to validate the SSL certificate for launchpad.net:443. Make sure your managed systems have a valid CA certificate installed.  If the website serving the url uses SNI you need python >= 2.7.9 on your managed machine.  You can use validate_certs=False if you do not need to confirm the server\\s identity but this is unsafe and not recommended Paths checked for this platform: /etc/ssl/certs, /etc/pki/ca-trust/extracted/pem, /etc/pki/tls/certs, /usr/share/ca-certificates/cacert.org, /etc/ansible"}
