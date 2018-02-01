@@ -64,6 +64,12 @@
     - name: install vagrant
       apt: name=vagrant state=present force=yes
 
+    # Set git stuff (Todo: test on fresh box)
+    - name: "Set git user email"
+      shell: git config --global user.email "damxam@gmail.com"
+    - name: "Set git user name"
+      shell: git config --global user.name "Max Wittmann"
+
     #Create my standard directory structure; there's a role in creating the work
     #space and then pulling all your projects.
     - name: Create Workspaces top-level dir
@@ -79,5 +85,25 @@
       #How could we safely get our notes in here automatically?
     - name: Create Notes workspace subdir where we keep our notes
       file: path={{ ansible_env.HOME }}/Notes state=directory
-
-      #It could open everything and then create a screenshot at the end for testing!
+    # Home dir should be input param
+    - name: Check whether ssh key exists
+      stat:
+        path: /home/damxam/.ssh/id_rsa
+      register: ssh_key
+    - name: Create ssh key
+      shell: ssh-keygen -t rsa -f /home/damxam/.ssh/id_rsa -q -N "" -C "damxam@gmail.com"
+      args:
+        creates: /home/damxam/.ssh/id_rsa
+      when: not ssh_key.stat.exists
+    - name: Change .ssh private key owner to damxam (TODO damxam should be param)
+      file:
+        path: /home/damxam/.ssh/id_rsa
+        owner: damxam
+        group: damxam
+        mode: 0600
+    - name: Change .ssh public key owner to damxam (TODO damxam should be param)
+      file:
+        path: /home/damxam/.ssh/id_rsa.pub
+        owner: damxam
+        group: damxam
+        mode: 0644
