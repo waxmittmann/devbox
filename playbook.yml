@@ -40,9 +40,11 @@
   sudo: true
 
   tasks:
-    #Install update apt stuff
+    # Add apt repos
     - name: add atom path to repo
       apt_repository: repo='ppa:webupd8team/atom' state=present
+    - name: add java repo
+      apt_repository: repo='ppa:webupd8team/java' state=present
     - name: update apt cache
       apt: update_cache=yes
 
@@ -50,41 +52,116 @@
     - name: install atom
       apt: name=atom state=present force=yes
 
+    - name: java 8 license, 1
+      shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+
+    - name: java 8 license, 2
+      shell: echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+
+    - name: install java 8
+      apt: name=oracle-java8-installer state=present force=yes
+
     #Install npm (will have to download somewhere and setup)
     #curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
     #sudo apt-get install -y nodejs
 
     #DB and standard stuff
-    - name: install mysql
-      apt: name=mysql-server state=present force=yes
     - name: install git
       apt: name=git state=present force=yes
     - name: install tilda (console replacement)
       apt: name=tilda state=present force=yes
     - name: install vagrant
       apt: name=vagrant state=present force=yes
-
+    - name: install zsh
+      apt: name=zsh state=present force=yes
+    - name: install oh-my-zsh
+      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+      become_user: damxam
     # Set git stuff (Todo: test on fresh box)
     - name: "Set git user email"
       shell: git config --global user.email "damxam@gmail.com"
     - name: "Set git user name"
       shell: git config --global user.name "Max Wittmann"
 
+    # Download custom oh-my-zsh
+    - name: "Remove customs repo if exist"
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+        state: absent
+    - name: "Remove .git dir if exists"
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/.git"
+        state: absent
+    - name: "Remove old customs if exists"
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
+        state: absent
+
+    - name: "Download oh-my-zsh repo"
+      git:
+        repo: "https://github.com/waxmittmann/MyZsh.git"
+        dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+        accept_hostkey: True
+        force: Yes
+    #- name: "Move all contents from customs repo 1"
+    #  shell: "mv {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh/* {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
+    #- name: "Move all contents from customs repo 2"
+    #  shell: "mv {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh/.* {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
+    - name: "Move .git from customs repo"
+      shell: "mv -f .git .."
+      args:
+        chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+    - name: "Move customs.zsh from customs repo"
+      shell: "mv -f customs.zsh .."
+      args:
+        chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+    - name: "Set customs to be owned by user"
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
+        recurse: Yes
+        owner: damxam
+        group: damxam
+
     #Create my standard directory structure; there's a role in creating the work
     #space and then pulling all your projects.
     - name: Create Workspaces top-level dir
-      file: path={{ ansible_env.HOME }}/Workspaces state=directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces"
+        state: directory
+        owner: damxam
+        group: damxam
     - name: Create Scala workspace subdir
-      file: path={{ ansible_env.HOME }}/Workspaces/Scala state=directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/Scala"
+        state: directory
+        owner: damxam
+        group: damxam
     - name: Create Java workspace subdir
-      file: path={{ ansible_env.HOME }}/Workspaces/Java state=directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/Java"
+        state: directory
+        owner: damxam
+        group: damxam
     - name: Create Javascript workspace subdir
-      file: path={{ ansible_env.HOME }}/Workspaces/Javascript state=directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/Javascript"
+        state: directory
+        owner: damxam
+        group: damxam
     - name: Create Web workspace subdir
-      file: path={{ ansible_env.HOME }}/Workspaces/Web state=directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/Web"
+        state: directory
+        owner: damxam
+        group: damxam
       #How could we safely get our notes in here automatically?
     - name: Create Notes workspace subdir where we keep our notes
-      file: path={{ ansible_env.HOME }}/Notes state=directory
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Notes"
+        state: directory
+        owner: damxam
+        group: damxam
+
     # Home dir should be input param
     - name: Check whether ssh key exists
       stat:
