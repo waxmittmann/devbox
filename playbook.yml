@@ -33,9 +33,9 @@
     # Option 2) Keep as git repo so it updates, but then might break stuff if
     #   it's doing something unexpected.
     - { role: ansible-role-intellij, intellij_version: 2016.1.1, intellij_tmp: /AnsibleInstall/IntelliJ.deb }
-    - { role: ansible-oracle-java, java_download_path: /AnsibleInstall/Java }
+    #- { role: ansible-oracle-java, java_download_path: /AnsibleInstall/Java }
     - { role: ansible-role-scala, scala_sbt_tmp_deb: /AnsibleInstall/sbt.deb}
-    - ansible-ohmyzsh
+    #- ansible-ohmyzsh
     #role: foo_app_instance, dir: '/opt/a',  app_port: 5000
   sudo: true
 
@@ -138,19 +138,19 @@
         group: damxam
     - name: Create Java workspace subdir
       file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Java"
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools"
         state: directory
         owner: damxam
         group: damxam
     - name: Create Javascript workspace subdir
       file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Javascript"
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/Projects"
         state: directory
         owner: damxam
         group: damxam
     - name: Create Web workspace subdir
       file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Web"
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs"
         state: directory
         owner: damxam
         group: damxam
@@ -162,25 +162,50 @@
         owner: damxam
         group: damxam
 
+    # Install intellij
+    #- name: Download IntelliJ
+    #  url: https://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
+    #  dest: /AnsibleInstall
+    - name: Check whether IntelliJ exists
+      stat:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+      register: intellij_installed
+    - name: Create dir for IntelliJ
+      file:
+        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+        state: directory
+        owner: damxam
+        group: damxam
+      when: not intellij_installed.stat.exists
+    # TODO: Only if intellij doesn't exist
+    - name: Download and Extract to IDEs
+      unarchive:
+        src: https://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
+        #src: /AnsibleInstall/ideaIC-2017.3.4.tar.gz
+        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+        remote_src: yes
+      when: not intellij_installed.stat.exists
+    # TODO: Create shortcut in workspace
+
     # Home dir should be input param
     - name: Check whether ssh key exists
       stat:
         path: /home/damxam/.ssh/id_rsa
       register: ssh_key
     - name: Create ssh key
-      shell: ssh-keygen -t rsa -f /home/damxam/.ssh/id_rsa -q -N "" -C "damxam@gmail.com"
+      shell: "ssh-keygen -t rsa -f {{ lookup('env', 'HOME') }}/.ssh/id_rsa -q -N \"\" -C \"damxam@gmail.com\""
       args:
-        creates: /home/damxam/.ssh/id_rsa
+        creates: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
       when: not ssh_key.stat.exists
     - name: Change .ssh private key owner to damxam (TODO damxam should be param)
       file:
-        path: /home/damxam/.ssh/id_rsa
+        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
         owner: damxam
         group: damxam
         mode: 0600
     - name: Change .ssh public key owner to damxam (TODO damxam should be param)
       file:
-        path: /home/damxam/.ssh/id_rsa.pub
+        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
         owner: damxam
         group: damxam
         mode: 0644
