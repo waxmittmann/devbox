@@ -49,8 +49,8 @@
     #DB and standard stuff
     - name: install git
       apt: name=git state=present force=yes
-    - name: install tilda (console replacement)
-      apt: name=tilda state=present force=yes
+    - name: install terminator (console replacement)
+      apt: name=terminator state=present force=yes
     - name: install vagrant
       apt: name=vagrant state=present force=yes
     - name: install zsh
