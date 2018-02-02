@@ -1,42 +1,14 @@
-# Man, if I had a properly *testable* dev setup, that'd be sweet.
 ---
 - hosts: all
 
-  #~/Install doesn't work as the dir so hard-coding for now; at very least
-  #   should be variable so we could theoretically use a base box w.out /vagrant
-  #   also could just generate dir from root. Let's do that.
-  # Actually I like it better in not a home BUT it should work... happens in
-  #   the zsh role.
   pre_tasks:
     - name: Create Install dir where we'll store all our binaries
       file: path=/AnsibleInstall state=directory
-    - name: Create Java dir inside Install dir where we'll store all our binaries
-      file: path=/AnsibleInstall/Java state=directory
-    #Would love to do this not cludgy; one way would be to have the base box
-    #just have it, but meh. Even betterer would be to figure out how to just
-    #force installation of dependencies.
-    - name: Install openjdk-6, which other stuff will otherwise complain about
-      #shell: sudo apt-get install openjdk-6-jre
-      shell: yes 'Y' | apt-get install openjdk-6-jre
-      ignore_errors: yes
-    #Urm, top doesn't fail anymore, don't need?
-    - name: ...which will fail, so we will need to install the dependencies
-      shell: yes 'Y' | sudo apt-get -f install
 
   roles:
-    # Two options here;
-    #
-    # Option 1) make these *not* auto-git dirs so they are commited,
-    # update manually. Then we know the state. But if role breaks, we won't
-    # get update.
-    #
-    # Option 2) Keep as git repo so it updates, but then might break stuff if
-    #   it's doing something unexpected.
+    # Todo: These were from separate repos; inline or do properly. Does nothing atm.
     - { role: ansible-role-intellij, intellij_version: 2016.1.1, intellij_tmp: /AnsibleInstall/IntelliJ.deb }
-    #- { role: ansible-oracle-java, java_download_path: /AnsibleInstall/Java }
     - { role: ansible-role-scala, scala_sbt_tmp_deb: /AnsibleInstall/sbt.deb}
-    #- ansible-ohmyzsh
-    #role: foo_app_instance, dir: '/opt/a',  app_port: 5000
   sudo: true
 
   tasks:
@@ -103,10 +75,6 @@
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
         accept_hostkey: True
         force: Yes
-    #- name: "Move all contents from customs repo 1"
-    #  shell: "mv {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh/* {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
-    #- name: "Move all contents from customs repo 2"
-    #  shell: "mv {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh/.* {{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
     - name: "Move .git from customs repo"
       shell: "mv -f .git .."
       args:
@@ -188,9 +156,21 @@
     # TODO: Create shortcut in workspace
 
     # Home dir should be input param
+    - name: Check whether ssh dir exists
+      stat:
+        path: "{{ lookup('env', 'HOME') }}/.ssh"
+      register: ssh_dir_exists
+    - name: Create dir for IntelliJ
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.ssh"
+        state: directory
+        owner: damxam
+        group: damxam
+      when: not ssh_dir_exists.stat.exists
+
     - name: Check whether ssh key exists
       stat:
-        path: /home/damxam/.ssh/id_rsa
+        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
       register: ssh_key
     - name: Create ssh key
       shell: "ssh-keygen -t rsa -f {{ lookup('env', 'HOME') }}/.ssh/id_rsa -q -N \"\" -C \"damxam@gmail.com\""
