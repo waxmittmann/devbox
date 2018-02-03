@@ -113,22 +113,23 @@
     # space and then pulling all your projects.
     - name: create Workspace and notes dirs
       file:
-        path: "lookup('env', 'HOME')"
+        path: "{{ lookup('env', 'HOME') }}/{{ item }}"
         state: directory
         owner: damxam
         group: damxam
         mode: 0775
-      with_items:
-        - /Notes/
-        - /Workspaces/
-        - /Workspaces/IDEs
-        - /Workspaces/Tools
-        - /Workspaces/Libaries
-        - /Workspaces/Libaries/bin
-        - /Workspaces/Projects
-        - /Workspaces/Projects/Useful
-        - /Workspaces/Projects/Experimental
-        - /Workspaces/Projects/Learning
+      with_items: [
+        "/Notes/",
+        "/Workspaces/",
+        "/Workspaces/IDEs",
+        "/Workspaces/Tools",
+        "/Workspaces/Libaries",
+        "/Workspaces/Libaries/bin",
+        "/Workspaces/Projects",
+        "/Workspaces/Projects/Useful",
+        "/Workspaces/Projects/Experimental",
+        "/Workspaces/Projects/Learning"
+      ]
 
     # Clone projects I need / am working on (TODO: better, not one each like that)
     - name: "Download my zsh extension repo"
