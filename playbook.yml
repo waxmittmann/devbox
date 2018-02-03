@@ -68,7 +68,13 @@
       become: yes
       become_user: damxam
 
-    # Download custom oh-my-zsh
+    # Download my zsh extensions; would be nicer to update if exists maybe.
+    - name: "Remove customs repo files if they exist"
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+        state: absent
+
+
     - name: "Remove customs repo if exist"
       file:
         path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
@@ -82,7 +88,7 @@
         path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
         state: absent
 
-    - name: "Download oh-my-zsh repo"
+    - name: "Download my zsh extension repo"
       git:
         repo: "https://github.com/waxmittmann/MyZsh.git"
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
@@ -104,44 +110,33 @@
         group: damxam
 
     #Create my standard directory structure; there's a role in creating the work
-    #space and then pulling all your projects.
-    - name: Create Workspaces top-level dir
+    # space and then pulling all your projects.
+    - name: create Workspace and notes dirs
       file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces"
+        path: "lookup('env', 'HOME')"
         state: directory
         owner: damxam
         group: damxam
-    - name: Create Scala workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Scala"
-        state: directory
-        owner: damxam
-        group: damxam
-    - name: Create Java workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools"
-        state: directory
-        owner: damxam
-        group: damxam
-    - name: Create Javascript workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Projects"
-        state: directory
-        owner: damxam
-        group: damxam
-    - name: Create Web workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs"
-        state: directory
-        owner: damxam
-        group: damxam
-      #How could we safely get our notes in here automatically?
-    - name: Create Notes workspace subdir where we keep our notes
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Notes"
-        state: directory
-        owner: damxam
-        group: damxam
+        mode: 0775
+      with_items:
+        - /Notes/
+        - /Workspaces/
+        - /Workspaces/IDEs
+        - /Workspaces/Tools
+        - /Workspaces/Libaries
+        - /Workspaces/Libaries/bin
+        - /Workspaces/Projects
+        - /Workspaces/Projects/Useful
+        - /Workspaces/Projects/Experimental
+        - /Workspaces/Projects/Learning
+
+    # Clone projects I need / am working on (TODO: better, not one each like that)
+    - name: "Download my zsh extension repo"
+      git:
+        repo: "https://github.com/waxmittmann/devbox.git"
+        dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful"
+        accept_hostkey: True
+        force: Yes
 
     # Install intellij
     # Todo: Check that the folder contains something
@@ -173,6 +168,8 @@
         dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
         remote_src: Yes
       when: not intellij_installed.stat.exists
+      become: yes
+      become_user: damxam
     # TODO: Create shortcut in workspace
 
     # Home dir should be input param
