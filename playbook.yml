@@ -17,12 +17,12 @@
       apt_repository: repo='ppa:webupd8team/atom' state=present
     - name: add java repo
       apt_repository: repo='ppa:webupd8team/java' state=present
-    - name: update apt cache
-      apt: update_cache=yes
     - name: Add sbt repo, part 1
       shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee -a /etc/apt/sources.list.d/sbt.list"
     - name: Add sbt repo, part 2
       shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    - name: update apt cache
+      apt: update_cache=yes
 
     #Install atom; how do we import settings for this and other stuff automatically?
     - name: install atom
@@ -49,6 +49,8 @@
     #DB and standard stuff
     - name: install git
       apt: name=git state=present force=yes
+    - name: install gitk
+      apt: name=gitk state=present force=yes
     - name: install terminator (console replacement)
       apt: name=terminator state=present force=yes
     - name: install vagrant
@@ -152,7 +154,6 @@
         owner: damxam
         group: damxam
       when: not intellij_installed.stat.exists
-
     - name: Download intelliJ
       get_url:
         url: http://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
@@ -160,7 +161,6 @@
         owner: damxam
         group: damxam
       when: not intellij_installed.stat.exists
-
     # TODO: Only if intellij doesn't exist
     - name: Download and Extract to IDEs
       unarchive:
@@ -170,6 +170,13 @@
         remote_src: Yes
       when: not intellij_installed.stat.exists
     # TODO: Create shortcut in workspace
+    - name: Create link in /usr/bin
+      file:
+        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
+        dest: /usr/bin/idea
+        state: link
+        owner: damxam
+        group: damxam
 
     # Home dir should be input param
     - name: Check whether ssh dir exists
