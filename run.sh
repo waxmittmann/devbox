@@ -1,1 +1,1 @@
-ansible-playbook -i "localhost," -c local playbook.yml  -vvvv
+ansible-playbook -i "localhost," -c local playbook.yml -vvvv

@@ -21,7 +21,7 @@
       shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee -a /etc/apt/sources.list.d/sbt.list"
     - name: Add sbt repo, part 2
       shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
-    - name: update apt cache
+    - name: update apt cache (AFTER adding repos)
       apt: update_cache=yes
 
     #Install atom; how do we import settings for this and other stuff automatically?
@@ -37,15 +37,6 @@
     - name: install java 8
       apt: name=oracle-java8-installer state=present force=yes
 
-    - name: install sbt
-      apt: name=sbt state=present force=yes
-    - name: run sbt (to force actual install)
-      shell: sbt sbtVersion
-
-    #Install npm (will have to download somewhere and setup)
-    #curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
-    #sudo apt-get install -y nodejs
-
     #DB and standard stuff
     - name: install git
       apt: name=git state=present force=yes
@@ -60,13 +51,31 @@
     - name: install oh-my-zsh
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
       become_user: damxam
-    # Set git stuff (Todo: test on fresh box)
+    - name: install sbt
+      apt: name=sbt state=present force=yes
+    - name: run sbt (to force actual install)
+      shell: sbt sbtVersion
+    - name: install scala from .deb (do same for sbt)
+      apt:
+        deb: https://www.scala-lang.org/files/archive/scala-2.12.1.deb
+
+      # Set git stuff
     - name: "Set git user email"
       shell: git config --global user.email "damxam@gmail.com"
+      become: yes
+      become_user: damxam
     - name: "Set git user name"
       shell: git config --global user.name "Max Wittmann"
+      become: yes
+      become_user: damxam
 
-    # Download custom oh-my-zsh
+    # Download my zsh extensions; would be nicer to update if exists maybe.
+    - name: "Remove customs repo files if they exist"
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+        state: absent
+
+
     - name: "Remove customs repo if exist"
       file:
         path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
@@ -80,7 +89,7 @@
         path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
         state: absent
 
-    - name: "Download oh-my-zsh repo"
+    - name: "Download my zsh extension repo"
       git:
         repo: "https://github.com/waxmittmann/MyZsh.git"
         dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
@@ -102,44 +111,36 @@
         group: damxam
 
     #Create my standard directory structure; there's a role in creating the work
-    #space and then pulling all your projects.
-    - name: Create Workspaces top-level dir
+    # space and then pulling all your projects.
+    - name: create Workspace and notes dirs
       file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces"
+        path: "{{ lookup('env', 'HOME') }}/{{ item }}"
         state: directory
         owner: damxam
         group: damxam
-    - name: Create Scala workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Scala"
-        state: directory
-        owner: damxam
-        group: damxam
-    - name: Create Java workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools"
-        state: directory
-        owner: damxam
-        group: damxam
-    - name: Create Javascript workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Projects"
-        state: directory
-        owner: damxam
-        group: damxam
-    - name: Create Web workspace subdir
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs"
-        state: directory
-        owner: damxam
-        group: damxam
-      #How could we safely get our notes in here automatically?
-    - name: Create Notes workspace subdir where we keep our notes
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Notes"
-        state: directory
-        owner: damxam
-        group: damxam
+        mode: 0775
+      with_items: [
+        "/Notes/",
+        "/Workspaces/",
+        "/Workspaces/IDEs",
+        "/Workspaces/Tools",
+        "/Workspaces/Libaries",
+        "/Workspaces/Libaries/bin",
+        "/Workspaces/Projects",
+        "/Workspaces/Projects/Useful",
+        "/Workspaces/Projects/Experimental",
+        "/Workspaces/Projects/Learning"
+      ]
+
+    # Clone projects I need / am working on (TODO: better, not one each like that)
+    - name: "Download my zsh extension repo"
+      git:
+        repo: "https://github.com/waxmittmann/devbox.git"
+        dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
+        accept_hostkey: True
+        force: Yes
+      become: yes
+      become_user: damxam
 
     # Install intellij
     # Todo: Check that the folder contains something
@@ -161,22 +162,12 @@
         owner: damxam
         group: damxam
       when: not intellij_installed.stat.exists
-    # TODO: Only if intellij doesn't exist
     - name: Download and Extract to IDEs
       unarchive:
         src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/ideaIC-2017.3.4.tar.gz"
-        #src: /AnsibleInstall/ideaIC-2017.3.4.tar.gz
         dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
         remote_src: Yes
       when: not intellij_installed.stat.exists
-    # TODO: Create shortcut in workspace
-    - name: Create link in /usr/bin
-      file:
-        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
-        dest: /usr/bin/idea
-        state: link
-        owner: damxam
-        group: damxam
 
     # Home dir should be input param
     - name: Check whether ssh dir exists
@@ -190,7 +181,6 @@
         owner: damxam
         group: damxam
       when: not ssh_dir_exists.stat.exists
-
     - name: Check whether ssh key exists
       stat:
         path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
