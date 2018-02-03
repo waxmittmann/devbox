@@ -61,8 +61,12 @@
       # Set git stuff
     - name: "Set git user email"
       shell: git config --global user.email "damxam@gmail.com"
+      become: yes
+      become_user: damxam
     - name: "Set git user name"
       shell: git config --global user.name "Max Wittmann"
+      become: yes
+      become_user: damxam
 
     # Download custom oh-my-zsh
     - name: "Remove customs repo if exist"
