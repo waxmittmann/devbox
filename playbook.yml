@@ -17,12 +17,12 @@
       apt_repository: repo='ppa:webupd8team/atom' state=present
     - name: add java repo
       apt_repository: repo='ppa:webupd8team/java' state=present
-    - name: update apt cache
-      apt: update_cache=yes
     - name: Add sbt repo, part 1
       shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee -a /etc/apt/sources.list.d/sbt.list"
     - name: Add sbt repo, part 2
       shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    - name: update apt cache (AFTER adding repos)
+      apt: update_cache=yes
 
     #Install atom; how do we import settings for this and other stuff automatically?
     - name: install atom
@@ -36,11 +36,6 @@
 
     - name: install java 8
       apt: name=oracle-java8-installer state=present force=yes
-
-    - name: install sbt
-      apt: name=sbt state=present force=yes
-    - name: run sbt (to force actual install)
-      shell: sbt sbtVersion
 
     #Install npm (will have to download somewhere and setup)
     #curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
@@ -58,7 +53,12 @@
     - name: install oh-my-zsh
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
       become_user: damxam
-    # Set git stuff (Todo: test on fresh box)
+    - name: install sbt
+      apt: name=sbt state=present force=yes
+    - name: run sbt (to force actual install)
+      shell: sbt sbtVersion
+
+      # Set git stuff
     - name: "Set git user email"
       shell: git config --global user.email "damxam@gmail.com"
     - name: "Set git user name"
