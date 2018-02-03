@@ -154,7 +154,6 @@
         owner: damxam
         group: damxam
       when: not intellij_installed.stat.exists
-
     - name: Download intelliJ
       get_url:
         url: http://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
@@ -162,18 +161,21 @@
         owner: damxam
         group: damxam
       when: not intellij_installed.stat.exists
-
-    # TODO: Only if intellij doesn't exist
     - name: Download and Extract to IDEs
       unarchive:
         src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/ideaIC-2017.3.4.tar.gz"
-        #src: /AnsibleInstall/ideaIC-2017.3.4.tar.gz
         dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
         remote_src: Yes
       when: not intellij_installed.stat.exists
       become: yes
       become_user: damxam
-    # TODO: Create shortcut in workspace
+    - name: Create link to intellij in /usr/bin
+      file:
+        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
+        dest: "/usr/bin/idea"
+        owner: damxam
+        group: damxam
+        state: link
 
     # Home dir should be input param
     - name: Check whether ssh dir exists
@@ -187,7 +189,6 @@
         owner: damxam
         group: damxam
       when: not ssh_dir_exists.stat.exists
-
     - name: Check whether ssh key exists
       stat:
         path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
