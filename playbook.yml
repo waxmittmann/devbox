@@ -134,9 +134,11 @@
     - name: "Download my zsh extension repo"
       git:
         repo: "https://github.com/waxmittmann/devbox.git"
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful"
+        dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
         accept_hostkey: True
         force: Yes
+      become: yes
+      become_user: damxam
 
     # Install intellij
     # Todo: Check that the folder contains something
