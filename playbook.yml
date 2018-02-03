@@ -168,6 +168,13 @@
         dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
         remote_src: Yes
       when: not intellij_installed.stat.exists
+    - name: Create link in /usr/bin
+      file:
+        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
+        dest: /usr/bin/idea
+        state: link
+        owner: damxam
+        group: damxam
 
     # Home dir should be input param
     - name: Check whether ssh dir exists
