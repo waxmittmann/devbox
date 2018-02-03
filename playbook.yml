@@ -37,10 +37,6 @@
     - name: install java 8
       apt: name=oracle-java8-installer state=present force=yes
 
-    #Install npm (will have to download somewhere and setup)
-    #curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
-    #sudo apt-get install -y nodejs
-
     #DB and standard stuff
     - name: install git
       apt: name=git state=present force=yes
@@ -57,6 +53,9 @@
       apt: name=sbt state=present force=yes
     - name: run sbt (to force actual install)
       shell: sbt sbtVersion
+    - name: install scala from .deb (do same for sbt)
+      apt:
+        deb: https://www.scala-lang.org/files/archive/scala-2.12.1.deb
 
       # Set git stuff
     - name: "Set git user email"
