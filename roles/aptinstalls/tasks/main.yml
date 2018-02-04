@@ -7,6 +7,10 @@
     apt_repository: repo='ppa:webupd8team/atom' state=present
   - name: add java repo
     apt_repository: repo='ppa:webupd8team/java' state=present
+  - name: add neo4j repo
+    apt_repository:
+      repo: 'deb http://debian.neo4j.org/repo stable/'
+      state: present
   - name: Add sbt repo, part 1
     shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee -a /etc/apt/sources.list.d/sbt.list"
   - name: Add sbt repo, part 2
@@ -38,7 +42,9 @@
     "vagrant",
     "zsh",
     "sbt",
-    "xclip"
+    "xclip",
+    "neo4j",
+    "docker.io"
   ]
 
 # Todo: When this fails for something, will further items still be run?

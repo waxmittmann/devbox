@@ -1,6 +1,13 @@
 # devbox
 -- Warning: Don't run this on your machine unless you want to install my dev setup on it!
 
+Needs a new-ish version of ansible, which Ubuntu 16.04 LTS doesn't come with. In those cases: 
+```
+$ sudo apt-add-repository ppa:ansible/ansible
+$ sudo apt-get update
+$ sudo apt-get install ansible
+```
+
 For bootstrapping and keeping my dev box up to date.
 
 Kinda mostly working 0.0.1 of my devbox with things (I) like:
