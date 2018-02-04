@@ -30,7 +30,6 @@
     state: present
     force: yes
   with_items: [
-    "qdirstat",
     "atom",
     "git",
     "gitk",
@@ -38,8 +37,20 @@
     "terminator",
     "vagrant",
     "zsh",
-    "sbt"
+    "sbt",
+    "xclip"
   ]
+
+# Todo: When this fails for something, will further items still be run?
+- name: install optional things via apt
+  apt:
+    name: "{{ item }}"
+    state: present
+    force: yes
+  with_items: [
+    "qdirstat"
+  ]
+  ignore_errors: yes
 
 - name: run sbt (to force actual install)
   shell: sbt sbtVersion
