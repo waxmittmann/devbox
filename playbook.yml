@@ -24,7 +24,7 @@
     - name: "Set git user name"
       shell: git config --global user.name "Max Wittmann"
       become: yes
-      become_user: d
+      become_user: damxam
 
     # Clone projects I need / am working on (TODO: better, not one each like that)
     - name: "Download devbox repo"
