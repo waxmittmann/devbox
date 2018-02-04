@@ -1,11 +1,9 @@
 ---
 # Download my zsh extensions; would be nicer to update if exists maybe.
 
+- name: install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 - name: "Remove customs repo files if they exist"
-  file:
-    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
-    state: absent
-- name: "Remove customs repo if exist"
   file:
     path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
     state: absent
@@ -31,9 +29,9 @@
   shell: "mv -f customs.zsh .."
   args:
     chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
-- name: "Set customs to be owned by user"
+- name: "Set .oh-my.zsh to be owned by user"
   file:
-    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh"
     recurse: Yes
     owner: damxam
     group: damxam

@@ -1,6 +1,6 @@
 ---
-# Add apt repos
 
+# Add apt repos
 - name: add atom path to repo
   apt_repository: repo='ppa:webupd8team/atom' state=present
 - name: add java repo
@@ -12,7 +12,7 @@
 - name: update apt cache (AFTER adding repos)
   apt: update_cache=yes
 
-  # Install java; needs some extra license reading work
+# Install java; needs some extra license reading work
 - name: java 8 license, 1
   shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 - name: java 8 license, 2
@@ -37,9 +37,6 @@
   apt: name=vagrant state=present force=yes
 - name: install zsh
   apt: name=zsh state=present force=yes
-- name: install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-  become_user: damxam
 - name: install sbt
   apt: name=sbt state=present force=yes
 - name: run sbt (to force actual install)
