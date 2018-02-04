@@ -1,0 +1,39 @@
+---
+# Download my zsh extensions; would be nicer to update if exists maybe.
+
+- name: "Remove customs repo files if they exist"
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+    state: absent
+- name: "Remove customs repo if exist"
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+    state: absent
+- name: "Remove .git dir if exists"
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/.git"
+    state: absent
+- name: "Remove old customs if exists"
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
+    state: absent
+- name: "Download my zsh extension repo"
+  git:
+    repo: "https://github.com/waxmittmann/MyZsh.git"
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+    accept_hostkey: True
+    force: Yes
+- name: "Move .git from customs repo"
+  shell: "mv -f .git .."
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+- name: "Move customs.zsh from customs repo"
+  shell: "mv -f customs.zsh .."
+  args:
+    chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+- name: "Set customs to be owned by user"
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom"
+    recurse: Yes
+    owner: damxam
+    group: damxam

@@ -1,0 +1,23 @@
+---
+#Create my standard directory structure; there's a role in creating the work
+# space and then pulling all your projects.
+
+- name: create Workspace and notes dirs
+  file:
+    path: "{{ lookup('env', 'HOME') }}/{{ item }}"
+    state: directory
+    owner: damxam
+    group: damxam
+    mode: 0775
+  with_items: [
+    "/Notes/",
+    "/Workspaces/",
+    "/Workspaces/IDEs",
+    "/Workspaces/Tools",
+    "/Workspaces/Libraries",
+    "/Workspaces/Libraries/bin",
+    "/Workspaces/Projects",
+    "/Workspaces/Projects/Useful",
+    "/Workspaces/Projects/Experimental",
+    "/Workspaces/Projects/Learning"
+  ]
