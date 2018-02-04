@@ -20,7 +20,7 @@
     owner: damxam
     group: damxam
   when: not intellij_installed.stat.exists
-- name: Download and Extract to IDEs
+- name: Extract to IDEs
   unarchive:
     src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/ideaIC-2017.3.4.tar.gz"
     dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
