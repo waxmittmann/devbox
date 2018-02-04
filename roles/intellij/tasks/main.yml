@@ -1,0 +1,37 @@
+---
+# Install intellij
+# Todo: Check that the folder contains something
+
+- name: Check whether IntelliJ exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+  register: intellij_installed
+- name: Create dir for IntelliJ
+  file:
+    path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+    state: directory
+    owner: damxam
+    group: damxam
+  when: not intellij_installed.stat.exists
+- name: Download intelliJ
+  get_url:
+    url: http://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+    owner: damxam
+    group: damxam
+  when: not intellij_installed.stat.exists
+- name: Download and Extract to IDEs
+  unarchive:
+    src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/ideaIC-2017.3.4.tar.gz"
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+    remote_src: Yes
+    owner: damxam
+    group: damxam
+  when: not intellij_installed.stat.exists
+- name: Create link in /usr/bin
+  file:
+    src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
+    dest: /usr/bin/idea
+    state: link
+    owner: damxam
+    group: damxam

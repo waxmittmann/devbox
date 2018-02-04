@@ -10,6 +10,8 @@
     - anaconda
     - aptinstalls
     - zsh
+    - sshkey
+    - intellij
 
   sudo: true
 
@@ -22,66 +24,7 @@
     - name: "Set git user name"
       shell: git config --global user.name "Max Wittmann"
       become: yes
-      become_user: damxam
-
-    # Install Anaconda (Python)
-    # TODO: Add the bin folder to path
-    - name: Check whether Anaconda exists
-      stat:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Anaconda"
-      register: anaconda_installed
-    - name: Download Anaconda
-      get_url:
-        url: https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
-        dest: "/AnsibleInstall"
-        owner: damxam
-        group: damxam
-        mode: 0755
-      when: not anaconda_installed.stat.exists
-    - name: Install python pexpect (needed to install Anaconda)
-      pip:
-        name: pexpect
-    - name: Install Anaconda
-      command: /AnsibleInstall/Anaconda3-5.0.1-Linux-x86_64.sh -b -p "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Anaconda"
-      become: yes
-      become_user: damxam
-      when: not anaconda_installed.stat.exists
-
-    # Install intellij
-    # Todo: Check that the folder contains something
-    - name: Check whether IntelliJ exists
-      stat:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-      register: intellij_installed
-    - name: Create dir for IntelliJ
-      file:
-        path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-        state: directory
-        owner: damxam
-        group: damxam
-      when: not intellij_installed.stat.exists
-    - name: Download intelliJ
-      get_url:
-        url: http://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-        owner: damxam
-        group: damxam
-      when: not intellij_installed.stat.exists
-    - name: Download and Extract to IDEs
-      unarchive:
-        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/ideaIC-2017.3.4.tar.gz"
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-        remote_src: Yes
-        owner: damxam
-        group: damxam
-      when: not intellij_installed.stat.exists
-    - name: Create link in /usr/bin
-      file:
-        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
-        dest: /usr/bin/idea
-        state: link
-        owner: damxam
-        group: damxam
+      become_user: d
 
     # Clone projects I need / am working on (TODO: better, not one each like that)
     - name: "Download devbox repo"
@@ -92,37 +35,3 @@
         force: Yes
       become: yes
       become_user: damxam
-
-    # Home dir should be input param
-    - name: Check whether ssh dir exists
-      stat:
-        path: "{{ lookup('env', 'HOME') }}/.ssh"
-      register: ssh_dir_exists
-    - name: Create dir for IntelliJ
-      file:
-        path: "{{ lookup('env', 'HOME') }}/.ssh"
-        state: directory
-        owner: damxam
-        group: damxam
-      when: not ssh_dir_exists.stat.exists
-    - name: Check whether ssh key exists
-      stat:
-        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
-      register: ssh_key
-    - name: Create ssh key
-      shell: "ssh-keygen -t rsa -f {{ lookup('env', 'HOME') }}/.ssh/id_rsa -q -N \"\" -C \"damxam@gmail.com\""
-      args:
-        creates: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
-      when: not ssh_key.stat.exists
-    - name: Change .ssh private key owner to damxam (TODO damxam should be param)
-      file:
-        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
-        owner: damxam
-        group: damxam
-        mode: 0600
-    - name: Change .ssh public key owner to damxam (TODO damxam should be param)
-      file:
-        path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
-        owner: damxam
-        group: damxam
-        mode: 0644

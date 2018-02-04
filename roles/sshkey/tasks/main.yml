@@ -1,0 +1,35 @@
+---
+# Home dir should be input param
+
+- name: Check whether ssh dir exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.ssh"
+  register: ssh_dir_exists
+- name: Create dir for IntelliJ
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.ssh"
+    state: directory
+    owner: damxam
+    group: damxam
+  when: not ssh_dir_exists.stat.exists
+- name: Check whether ssh key exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+  register: ssh_key
+- name: Create ssh key
+  shell: "ssh-keygen -t rsa -f {{ lookup('env', 'HOME') }}/.ssh/id_rsa -q -N \"\" -C \"damxam@gmail.com\""
+  args:
+    creates: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+  when: not ssh_key.stat.exists
+- name: Change .ssh private key owner to damxam (TODO damxam should be param)
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+    owner: damxam
+    group: damxam
+    mode: 0600
+- name: Change .ssh public key owner to damxam (TODO damxam should be param)
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+    owner: damxam
+    group: damxam
+    mode: 0644
