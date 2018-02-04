@@ -7,8 +7,8 @@
 
   roles:
     - workspace
-    - anaconda
     - aptinstalls
+    - anaconda 
     - zsh
     - sshkey
     - intellij
