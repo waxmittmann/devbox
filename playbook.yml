@@ -42,3 +42,6 @@
 
     - name: "Add user to vboxsf group (virtualbox-specific)"
       command: "adduser damxam vboxsf"
+
+    - name: "Add user to docker group"
+      command: "adduser damxam docker"
