@@ -17,14 +17,16 @@
 
   tasks:
       # Set git stuff
-    - name: "Set git user email"
-      shell: git config --global user.email "damxam@gmail.com"
-      become: yes
-      become_user: damxam
-    - name: "Set git user name"
-      shell: git config --global user.name "Max Wittmann"
-      become: yes
-      become_user: damxam
+    - name: "Set git stuff"
+      block:
+      - name: "Set git user email"
+        shell: git config --global user.email "damxam@gmail.com"
+        become: yes
+        become_user: damxam
+      - name: "Set git user name"
+        shell: git config --global user.name "Max Wittmann"
+        become: yes
+        become_user: damxam
 
     # Clone projects I need / am working on (TODO: better, not one each like that)
     - name: "Download devbox repo"
@@ -35,3 +37,6 @@
         force: Yes
       become: yes
       become_user: damxam
+
+    - name: "Add user to vboxsf group (virtualbox-specific)"
+      command: "adduser damxam vboxsf"
