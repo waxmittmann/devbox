@@ -29,14 +29,16 @@
         become_user: damxam
 
     # Clone projects I need / am working on (TODO: better, not one each like that)
+    # Do not overwrite if already exists with local changes; that errors, so ignore.
     - name: "Download devbox repo"
       git:
         repo: "https://github.com/waxmittmann/devbox.git"
         dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
         accept_hostkey: True
-        force: Yes
+        force: no
       become: yes
       become_user: damxam
+      ignore_errors: yes
 
     - name: "Add user to vboxsf group (virtualbox-specific)"
       command: "adduser damxam vboxsf"
