@@ -42,15 +42,16 @@
 
     - name: "Download github repos"
       git:
-        repo: "git@github.com:{{ item.path }}.git"
+        repo: "https://github.com/{{ item.path }}.git"
         dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
         accept_hostkey: True
         force: no
       become: yes
       become_user: damxam
-      ignore_errors: yes
+      #ignore_errors: yes
       with_items:
-        - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Useful', name: 'neo4j-movies-java-bolt' }
+        - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
+        - { path: 'waxmittmann/workflowManagers', type: 'Experimental', name: 'workflowManagers' }
 
     - name: "Add user to vboxsf group (virtualbox-specific)"
       command: "adduser damxam vboxsf"
