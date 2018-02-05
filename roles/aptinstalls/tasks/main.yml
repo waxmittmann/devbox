@@ -44,7 +44,8 @@
     "sbt",
     "xclip",
     "neo4j",
-    "docker.io"
+    "docker.io",
+    "maven"
   ]
 
 # Todo: When this fails for something, will further items still be run?
