@@ -20,6 +20,9 @@
     shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee /etc/apt/sources.list.d/sbt.list"
   - name: Add sbt repo, part 2
     shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+  - name: Add slack repo
+    apt_repository: repo='ppa:rael-gc/scudcloud' state=present
+
   - name: update apt cache (AFTER adding repos)
     apt: update_cache=yes
 
@@ -50,7 +53,8 @@
     "xclip",
     "neo4j",
     "docker.io",
-    "maven"
+    "maven",
+    "scudcloud"
   ]
 
 # Todo: When this fails for something, will further items still be run?
