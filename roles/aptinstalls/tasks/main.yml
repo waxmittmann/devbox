@@ -54,7 +54,9 @@
     "xclip",
     "neo4j",
     "docker.io",
-    "maven"
+    "maven",
+    "virtualbox",
+    "snapd"
   ]
 
 - name: "Install virtualbox guest additions (TODO: Make virtualbox only)"
@@ -92,3 +94,39 @@
       deb: https://www.scala-lang.org/files/archive/scala-2.12.1.deb
       state: present
     when: not scala_exists.stat.exists
+
+- name: Install slack
+  block:
+    - name: Check whether slack is installed
+      stat:
+        path: /usr/bin/slack
+      register: slack_exists
+    - name: install slack
+      apt:
+        deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-3.0.5-amd64.deb
+        state: present
+      when: not slack_exists.stat.exists
+
+- name: Install mailspring
+  command: sudo snap install mailspring --classic
+
+- name: Install kubernetes + friends
+  block:
+    - name: Install kubectrl
+      command: sudo snap install kubectl --classic
+    - name: Install minikube
+      get_url:
+        url: https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64
+        dest: /usr/local/bin/minikube
+        mode: +x
+    - name: Download helm
+      get_url:
+        url: https://kubernetes-helm.storage.googleapis.com/helm-v2.8.0-linux-amd64.tar.gz
+        dest: /AnsibleInstall
+    - name: Extract
+      unarchive:
+        src: /AnsibleInstall/helm-v2.8.0-linux-amd64.tar.gz
+        dest: /AnsibleInstall
+        remote_src: Yes
+    - name: Move to /usr/bin
+      copy: remote_src=True src=/AnsibleInstall/linux-amd64/helm dest=/usr/bin/ mode=0755
