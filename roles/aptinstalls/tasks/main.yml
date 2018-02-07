@@ -118,7 +118,7 @@
       get_url:
         url: https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64
         dest: /usr/local/bin/minikube
-        mode: +x
+        mode: 0755
     - name: Download helm
       get_url:
         url: https://kubernetes-helm.storage.googleapis.com/helm-v2.8.0-linux-amd64.tar.gz
