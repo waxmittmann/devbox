@@ -93,6 +93,9 @@
         state: present
       when: not slack_exists.stat.exists
 
+- name: Install mailspring
+  command: sudo snap install mailspring --classic
+
 - name: Install kubernetes + friends
   block:
     - name: Install kubectrl

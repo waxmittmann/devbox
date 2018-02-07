@@ -59,3 +59,12 @@
 
     - name: "Add user to docker group"
       command: "adduser damxam docker"
+
+    # This will fail / be useless on non-nautilus distros; should start adding
+    # some conditional logic
+    - name: "Set my custom nautilus bookmarks (warning, overwrites existing)"
+      copy:
+        src: files/bookmarks
+        dest: /home/damxam/.config/gtk-3.0
+        owner: damxam
+        group: damxam
