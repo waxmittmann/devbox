@@ -1,0 +1,33 @@
+# Clone projects I need / am working on (TODO: better, not one each like that)
+# Do not overwrite if already exists with local changes; that errors, so ignore.
+- name: "Download devbox repo"
+  git:
+    repo: "https://github.com/waxmittmann/devbox.git"
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
+    accept_hostkey: True
+    force: no
+  become: yes
+  become_user: damxam
+  ignore_errors: yes
+
+- name: "Download github repos"
+  git:
+    repo: "https://github.com/{{ item.path }}.git"
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
+    accept_hostkey: True
+    force: no
+  become: yes
+  become_user: damxam
+  #ignore_errors: yes
+  with_items:
+    - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
+    - { path: 'waxmittmann/workflowManagers', type: 'Experimental', name: 'workflowManagers' }
+
+# - name: "Download gitlab (password-protected) repos"
+#   git:
+#     repo: "https://gitlab.com/{{ item.repo }}.git"
+#     dest: "{{ lookup('env', 'HOME') }}/{{ item.path }}"
+#   become: yes
+#   become_user: damxam
+#   with_items:
+#     - { repo: Notes, path: Notes }

@@ -16,11 +16,16 @@
   stat:
     path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
   register: ssh_key
-- name: Create ssh key
-  shell: "ssh-keygen -t rsa -f {{ lookup('env', 'HOME') }}/.ssh/id_rsa -q -N \"\" -C \"damxam@gmail.com\""
-  args:
-    creates: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
-  when: not ssh_key.stat.exists
+- name: Create public key
+  copy: content="{{ keys.public }}" dest={{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub
+- name: Create private key
+  copy: content="{{ keys.private }}" dest={{ lookup('env', 'HOME') }}/.ssh/id_rsa
+
+# - name: Create ssh key
+#   shell: "ssh-keygen -t rsa -f {{ lookup('env', 'HOME') }}/.ssh/id_rsa -q -N \"\" -C \"damxam@gmail.com\""
+#   args:
+#     creates: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+#   when: not ssh_key.stat.exists
 - name: Change .ssh private key owner to damxam (TODO damxam should be param)
   file:
     path: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
