@@ -18,8 +18,12 @@
   # Overwriting here (removed -a); undo if problems
   - name: Add sbt repo, part 1
     shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee /etc/apt/sources.list.d/sbt.list"
+  # Alternate keyserver: pgp.mit.edu (TODO: Try alternate if ubuntu down)
   - name: Add sbt repo, part 2
-    shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    # shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    shell: "sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    become_user: true
+    become: root
   - name: update apt cache (AFTER adding repos)
     apt: update_cache=yes
 
@@ -51,6 +55,16 @@
     "neo4j",
     "docker.io",
     "maven"
+  ]
+
+- name: "Install virtualbox guest additions (TODO: Make virtualbox only)"
+  apt:
+    name: "{{ item }}"
+    state: present
+    force: yes
+  with_items: [
+    "virtualbox-guest-dkms",
+    "linux-headers-virtual"
   ]
 
 # Todo: When this fails for something, will further items still be run?
