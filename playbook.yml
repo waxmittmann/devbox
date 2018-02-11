@@ -6,10 +6,12 @@
       file: path=/AnsibleInstall state=directory
 
   roles:
+    - sshkey
     - workspace
     - aptinstalls
+    - repos         # Use input seting
+    - anaconda      # Use input seting
     - zsh
-    - sshkey
     - intellij
 
   sudo: true
@@ -26,31 +28,6 @@
         shell: git config --global user.name "Max Wittmann"
         become: yes
         become_user: damxam
-
-    # Clone projects I need / am working on (TODO: better, not one each like that)
-    # Do not overwrite if already exists with local changes; that errors, so ignore.
-    - name: "Download devbox repo"
-      git:
-        repo: "https://github.com/waxmittmann/devbox.git"
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
-        accept_hostkey: True
-        force: no
-      become: yes
-      become_user: damxam
-      ignore_errors: yes
-
-    - name: "Download github repos"
-      git:
-        repo: "https://github.com/{{ item.path }}.git"
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
-        accept_hostkey: True
-        force: no
-      become: yes
-      become_user: damxam
-      #ignore_errors: yes
-      with_items:
-        - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
-        - { path: 'waxmittmann/workflowManagers', type: 'Experimental', name: 'workflowManagers' }
 
     - name: "Add user to vboxsf group (virtualbox-specific)"
       command: "adduser damxam vboxsf"
