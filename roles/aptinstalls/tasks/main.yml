@@ -20,8 +20,8 @@
     shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee /etc/apt/sources.list.d/sbt.list"
   # Alternate keyserver: pgp.mit.edu (TODO: Try alternate if ubuntu down)
   - name: Add sbt repo, part 2
-    # shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
-    shell: "sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    shell: "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
+    #shell: "sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823"
     become_user: true
     become: root
   - name: update apt cache (AFTER adding repos)
@@ -110,23 +110,23 @@
 - name: Install mailspring
   command: sudo snap install mailspring --classic
 
-- name: Install kubernetes + friends
-  block:
-    - name: Install kubectrl
-      command: sudo snap install kubectl --classic
-    - name: Install minikube
-      get_url:
-        url: https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64
-        dest: /usr/local/bin/minikube
-        mode: 0755
-    - name: Download helm
-      get_url:
-        url: https://kubernetes-helm.storage.googleapis.com/helm-v2.8.0-linux-amd64.tar.gz
-        dest: /AnsibleInstall
-    - name: Extract
-      unarchive:
-        src: /AnsibleInstall/helm-v2.8.0-linux-amd64.tar.gz
-        dest: /AnsibleInstall
-        remote_src: Yes
-    - name: Move to /usr/bin
-      copy: remote_src=True src=/AnsibleInstall/linux-amd64/helm dest=/usr/bin/ mode=0755
+# - name: Install kubernetes + friends
+#   block:
+#     - name: Install kubectrl
+#       command: sudo snap install kubectl --classic
+#     - name: Install minikube
+#       get_url:
+#         url: https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64
+#         dest: /usr/local/bin/minikube
+#         mode: 0755
+#     - name: Download helm
+#       get_url:
+#         url: https://kubernetes-helm.storage.googleapis.com/helm-v2.8.0-linux-amd64.tar.gz
+#         dest: /AnsibleInstall
+#     - name: Extract
+#       unarchive:
+#         src: /AnsibleInstall/helm-v2.8.0-linux-amd64.tar.gz
+#         dest: /AnsibleInstall
+#         remote_src: Yes
+#     - name: Move to /usr/bin
+#       copy: remote_src=True src=/AnsibleInstall/linux-amd64/helm dest=/usr/bin/ mode=0755
