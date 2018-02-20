@@ -27,6 +27,16 @@
       remote_src: Yes
       owner: damxam
       group: damxam
+  - name: Install scala plugin
+    block:
+    - get_url:
+        url: https://plugins.jetbrains.com/files/1347/42173/scala-intellij-bin-2017.3.11.1.zip #?updateId=42173&pluginId=1347
+        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
+        owner: damxam
+        group: damxam
+    - unarchive:
+        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/scala-intellij-bin-2017.3.11.1.zip"
+        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/plugins"
   - name: Create link in /usr/bin
     file:
       src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"

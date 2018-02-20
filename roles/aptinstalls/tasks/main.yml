@@ -11,6 +11,8 @@
     apt_key:
       url: https://debian.neo4j.org/neotechnology.gpg.key
       state: present
+    retries: 5
+    delay: 1
   - name: add neo4j repo
     apt_repository:
       repo: 'deb http://debian.neo4j.org/repo stable/'
@@ -26,7 +28,8 @@
     become: root
   - name: update apt cache (AFTER adding repos)
     apt: update_cache=yes
-
+    retries: 5
+    delay: 1
 # Install java; needs some extra license reading work
 - name: install java
   block:
@@ -59,15 +62,15 @@
     "snapd"
   ]
 
-- name: "Install virtualbox guest additions (TODO: Make virtualbox only)"
-  apt:
-    name: "{{ item }}"
-    state: present
-    force: yes
-  with_items: [
-    "virtualbox-guest-dkms",
-    "linux-headers-virtual"
-  ]
+# - name: "Install virtualbox guest additions (TODO: Make virtualbox only)"
+#   apt:
+#     name: "{{ item }}"
+#     state: present
+#     force: yes
+#   with_items: [
+#     "virtualbox-guest-dkms",
+#     "linux-headers-virtual"
+#   ]
 
 # Todo: When this fails for something, will further items still be run?
 - name: install optional things via apt
