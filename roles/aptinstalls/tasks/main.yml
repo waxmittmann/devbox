@@ -86,6 +86,16 @@
 - name: run sbt (to force actual install)
   shell: sbt sbtVersion
 
+- name: Install draw.io
+  block:
+    - stat:
+        path: "/usr/local/bin/draw.io"
+      register: drawio_exists
+    - apt:
+        deb: https://github.com/jgraph/drawio-desktop/releases/download/v8.0.6/draw.io-amd64-8.0.6.deb
+        state: present
+      when: not drawio_exists.stat.exists
+
 - name: Install scala
   block:
   - name: Check whether scala is installed
