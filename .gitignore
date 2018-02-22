@@ -2,3 +2,4 @@
 *.box
 passwords.etc
 vault_pass.txt
+*.vault
