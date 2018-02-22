@@ -9,10 +9,14 @@
     - sshkey
     - workspace
     - aptinstalls
-    - repos         # Use input seting
-    - anaconda      # Use input seting
+    - repos
+    - anaconda
     - zsh
     - intellij
+
+  vars:
+    install-anaconda: false
+    install-repos: false
 
   sudo: true
 
