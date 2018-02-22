@@ -1,0 +1,2 @@
+- replace with notes directory
+- except emergency notes (but maybe with readme)
