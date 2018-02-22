@@ -1,4 +1,4 @@
 {
-  "install-anaconda": true,
-  "install-projects": false
+  "install_anaconda": false,
+  "install_repos": true
 }

@@ -9,14 +9,13 @@
     - sshkey
     - workspace
     - aptinstalls
-    - repos
-    - anaconda
+    - { role: repos, when: install_repos == true }
+    - { role: anaconda, when: install_anaconda == true }
     - zsh
     - intellij
 
-  vars:
-    install-anaconda: false
-    install-repos: false
+  vars_files:
+    - ./config.json
 
   sudo: true
 
