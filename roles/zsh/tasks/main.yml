@@ -35,3 +35,7 @@
     recurse: Yes
     owner: damxam
     group: damxam
+- name: "Set zsh to be default shell"
+  user:
+    name: damxam
+    shell: /bin/zsh
