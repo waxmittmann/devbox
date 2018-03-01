@@ -15,6 +15,11 @@
     apt_repository:
       repo: 'deb http://debian.neo4j.org/repo stable/'
       state: present
+  # Todo: Probably check here that it's not already intalled
+  - name: draw.io
+    apt:
+      deb: https://github.com/jgraph/drawio-desktop/releases/download/v8.0.6/draw.io-amd64-8.0.6.deb
+      state: present
   # Overwriting here (removed -a); undo if problems
   - name: Add sbt repo, part 1
     shell: "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee /etc/apt/sources.list.d/sbt.list"
