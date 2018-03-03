@@ -38,3 +38,10 @@
     owner: damxam
     group: damxam
     mode: 0644
+
+- name: Add key (equiv. to ssh-add {key})
+  authorized_key:
+    user: damxam
+    state: present
+    key: "{{ lookup('file', item) }}"
+  with_items: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
