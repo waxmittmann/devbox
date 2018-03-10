@@ -3,32 +3,16 @@
 
 - name: install oh-my-zsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-- name: "Remove customs repo files if they exist"
-  file:
-    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
-    state: absent
-- name: "Remove .git dir if exists"
-  file:
-    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/.git"
-    state: absent
 - name: "Remove old customs if exists"
   file:
     path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
     state: absent
-- name: "Download my zsh extension repo"
-  git:
-    repo: "https://github.com/waxmittmann/MyZsh.git"
-    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
-    accept_hostkey: True
-    force: Yes
-- name: "Move .git from customs repo"
-  shell: "mv -f .git .."
-  args:
-    chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
-- name: "Move customs.zsh from customs repo"
-  shell: "mv -f customs.zsh .."
-  args:
-    chdir: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/MyZsh"
+- name: Copy my custom zsh stuff in
+  copy:
+    src: ./files/customs.zsh
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
+    owner: damxam
+    group: damxam
 - name: "Set .oh-my.zsh to be owned by user"
   file:
     path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh"
