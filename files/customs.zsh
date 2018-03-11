@@ -56,8 +56,8 @@ alias sbtopts='eval export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClas
 alias pgu='sudo su postgres'
 
 # view cheatsheet
-alias cheat='atom /home/max/Workspaces/Misc/zshCheatsheet.md'
-alias catcheat='cat /home/max/Workspaces/Misc/zshCheatsheet.md'
+alias cheat='atom /home/damxam/Workspaces/Misc/zshCheatsheet.txt'
+alias catcheat='cat /home/damxam/Workspaces/Misc/zshCheatsheet.txt'
 
 # Sbt stuff
 alias sbtt='sbt -mem 3000'

@@ -23,3 +23,9 @@
   user:
     name: damxam
     shell: /bin/zsh
+- name: Copy zsh cheat sheet
+  copy:
+    src: ./files/zshCheatsheet.txt
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Misc/zshCheatsheet.txt"
+    owner: damxam
+    group: damxam
