@@ -1,0 +1,26 @@
+- name: Check whether IntelliJ exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/FoxitReader"
+  register: foxit_installed
+- name: Download and install FoxitReader
+  block:
+  - name: Create dir for FoxitReader
+    file:
+      path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/FoxitReader"
+      state: directory
+      owner: damxam
+      group: damxam
+  - name: Download
+    get_url:
+      url: http://cdn01.foxitsoftware.com/pub/foxit/reader/desktop/linux/2.x/2.4/en_us/FoxitReader2.4.1.0609_Server_x64_enu_Setup.run.tar.gz
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/FoxitReader"
+      owner: damxam
+      group: damxam
+  - name: Extract
+    unarchive:
+      src: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/FoxitReader/FoxitReader2.4.1.0609_Server_x64_enu_Setup.run.tar.gz"
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/FoxitReader"
+      remote_src: Yes
+      owner: damxam
+      group: damxam
+  when: not foxit_installed.stat.exists

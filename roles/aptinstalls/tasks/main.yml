@@ -72,7 +72,6 @@
 #     "linux-headers-virtual"
 #   ]
 
-# Todo: When this fails for something, will further items still be run?
 - name: install optional things via apt
   apt:
     name: "{{ item }}"
@@ -83,6 +82,7 @@
   ]
   ignore_errors: yes
 
+# Todo: This doesn't seem to work properly; sbt still downloads the world on first use
 - name: run sbt (to force actual install)
   shell: sbt sbtVersion
 
