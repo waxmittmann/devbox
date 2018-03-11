@@ -16,6 +16,7 @@ alias golearn='cd ~/Workspaces/Projects/Learning'
 alias psj='ps -A | grep java'
 
 ## Do stuff with zsh
+# Todo: this should change the devbox file and then copy that across
 alias srcsh='source ~/.zshrc'
 alias opensh='atom ~/.oh-my-zsh/custom/customs.zsh'
 alias catsh='cat ~/.oh-my-zsh/custom/customs.zsh'
