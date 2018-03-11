@@ -1,0 +1,1 @@
+- have to interpolate the chosen data dir into customs.zsh (and maybe somewhere else?)
