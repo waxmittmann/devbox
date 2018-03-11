@@ -10,6 +10,7 @@
     - workspace
     - zsh
     - aptinstalls
+    - { role: tensorflow, when: install_tensorflow == true }
     - { role: foxitreader, when: install_foxitreader == true }
     - { role: repos, when: install_repos == true }
     - { role: anaconda, when: install_anaconda == true }

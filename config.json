@@ -2,5 +2,6 @@
   "install_anaconda": false,
   "install_repos": true,
   "install_intellij": true,
-  "install_foxitreader": true
+  "install_foxitreader": true,
+  "install_tensorflow": false
 }
