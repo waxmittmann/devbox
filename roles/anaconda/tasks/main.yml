@@ -4,12 +4,12 @@
 
 - name: Check whether Anaconda exists
   stat:
-    path: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Anaconda"
+    path: "{{ data_dir_root }}/Workspaces/Libraries/Anaconda"
   register: anaconda_installed
 - name: Download Anaconda
   get_url:
     url: https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
-    dest: "/AnsibleInstall"
+    dest: "{{ data_dir_root }}/AnsibleInstall"
     owner: damxam
     group: damxam
     mode: 0755
@@ -18,7 +18,7 @@
   pip:
     name: pexpect
 - name: Install Anaconda
-  command: /AnsibleInstall/Anaconda3-5.0.1-Linux-x86_64.sh -b -p "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Anaconda"
+  command: "{{ data_dir_root }}/AnsibleInstall/Anaconda3-5.0.1-Linux-x86_64.sh -b -p {{ data_dir_root }}/Workspaces/Libraries/Anaconda"
   become: yes
   become_user: damxam
   when: not anaconda_installed.stat.exists

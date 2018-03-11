@@ -1,10 +1,9 @@
 ---
 #Create my standard directory structure; there's a role in creating the work
 # space and then pulling all your projects.
-
 - name: create Workspace and notes dirs
   file:
-    path: "{{ lookup('env', 'HOME') }}/{{ item }}"
+    path: "{{ data_dir_root }}/{{ item }}"
     state: directory
     owner: damxam
     group: damxam

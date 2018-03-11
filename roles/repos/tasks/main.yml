@@ -3,7 +3,7 @@
 - name: "Download devbox repo"
   git:
     repo: "https://github.com/waxmittmann/devbox.git"
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
+    dest: "{{ data_dir_root }}/Workspaces/Projects/Useful/devbox"
     accept_hostkey: True
     force: no
   become: yes
@@ -13,7 +13,7 @@
 - name: "Download github repos"
   git:
     repo: "https://github.com/{{ item.path }}.git"
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
+    dest: "{{ data_dir_root }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
     accept_hostkey: True
     force: no
   become: yes
