@@ -10,8 +10,8 @@
     group: damxam
     mode: 0775
   with_items: [
-    "/Notes/",
     "/Workspaces/",
+    "/Workspaces/Notes/",
     "/Workspaces/IDEs",
     "/Workspaces/Misc",
     "/Workspaces/Tools",

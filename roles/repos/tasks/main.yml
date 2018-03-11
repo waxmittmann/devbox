@@ -23,11 +23,11 @@
     - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
     - { path: 'waxmittmann/workflowManagers', type: 'Experimental', name: 'workflowManagers' }
 
-# - name: "Download gitlab (password-protected) repos"
-#   git:
-#     repo: "https://gitlab.com/{{ item.repo }}.git"
-#     dest: "{{ lookup('env', 'HOME') }}/{{ item.path }}"
-#   become: yes
-#   become_user: damxam
-#   with_items:
-#     - { repo: Notes, path: Notes }
+- name: "Download gitlab repos (private, so needs valid ssh key)"
+  git:
+    repo: "git@gitlab.com:damxam/{{ item.repo }}.git"
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Notes/{{ item.path }}"
+  become: yes
+  become_user: damxam
+  with_items:
+    - { repo: Notes, path: VersionedNotes }

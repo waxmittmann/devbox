@@ -3,6 +3,7 @@
 # Permanent Aliases
 ## Go places
 alias goh='cd ~'
+alias govnote='cd ~/Workspaces/Notes/VersionedNotes'
 alias gonote='cd ~/Workspaces/Notes'
 
 alias gows='cd ~/Workspaces'
