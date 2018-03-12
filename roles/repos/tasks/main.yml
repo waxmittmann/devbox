@@ -27,6 +27,8 @@
   git:
     repo: "git@gitlab.com:damxam/{{ item.repo }}.git"
     dest: "{{ lookup('env', 'HOME') }}/Workspaces/Notes/{{ item.path }}"
+    accept_hostkey: True
+    force: no
   become: yes
   become_user: damxam
   with_items:
