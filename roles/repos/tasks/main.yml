@@ -18,7 +18,7 @@
     force: no
   become: yes
   become_user: damxam
-  #ignore_errors: yes
+  ignore_errors: yes
   with_items:
     - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
     - { path: 'waxmittmann/workflowManagers', type: 'Experimental', name: 'workflowManagers' }
@@ -31,5 +31,6 @@
     force: no
   become: yes
   become_user: damxam
+  ignore_errors: yes
   with_items:
     - { repo: Notes, path: VersionedNotes }
