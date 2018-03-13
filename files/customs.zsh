@@ -70,6 +70,9 @@ alias sbtr='sbt -mem 3000 "run local.conf"'
 alias kafkaon='~/Workspaces/Libraries/Kafka/kafka_2.12-1.0.1/bin/kafka-server-start.sh ~/Workspaces/Libraries/Kafka/kafka_2.12-1.0.1/config/server.properties &'
 alias kafkaoff='~/Workspaces/Libraries/Kafka/kafka_2.12-1.0.1/bin/kafka-server-stop.sh'
 
+## kubernetes
+alias deletePods='kubectl delete --all pods'
+
 ## Npm / Frontend stuff
 alias npmi='npm install'
 alias npms='npm start'
