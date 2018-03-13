@@ -2,7 +2,7 @@
 # Install Anaconda (Python)
 # TODO: Add the bin folder to path
 
-- name: Check whether Anaconda exists
+- name: Check whether we are up to date (version written) or Anaconda exists
   stat:
     path: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Anaconda"
   register: anaconda_installed
