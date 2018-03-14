@@ -1,0 +1,11 @@
+---
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+
+- name: Install tensorflow
+  pip:
+    name: tensorflow
+    virtualenv: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/tensorflow"
+  become: yes
+  become_user: damxam

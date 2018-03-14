@@ -14,8 +14,12 @@
       group: damxam
   - name: Download
     get_url:
+<<<<<<< HEAD
       url: https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download
       #url: https://doc-10-a0-docs.googleusercontent.com/docs/securesc/7mh5m8gd5sgrgfb1smldekpqcgt8dd2d/jp8crphh68vmjbnusvf2tga8n1qbjpb9/1520978400000/15876260727594163214/01450348049954871657/0B3X9GlR6EmbnQ0FtZmJJUXEyRTA?e=download
+=======
+      url: https://doc-10-a0-docs.googleusercontent.com/docs/securesc/7mh5m8gd5sgrgfb1smldekpqcgt8dd2d/jp8crphh68vmjbnusvf2tga8n1qbjpb9/1520978400000/15876260727594163214/01450348049954871657/0B3X9GlR6EmbnQ0FtZmJJUXEyRTA?e=download
+>>>>>>> 743d68af0bb8a2161310799aafb3ca688c148a50
       dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/GDrive"
       owner: damxam
       group: damxam

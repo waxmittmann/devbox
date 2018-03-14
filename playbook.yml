@@ -8,11 +8,15 @@
   roles:
     - sshkey
     - workspace
+    - zsh
     - aptinstalls
+    - { role: tensorflow, when: install_tensorflow == true }
+    - { role: foxitreader, when: install_foxitreader == true }
     - { role: repos, when: install_repos == true }
     - { role: anaconda, when: install_anaconda == true }
-    - zsh
-    - intellij
+    - { role: intellij, when: install_intellij == true }
+    - { role: kafka, when: install_kafka == true }
+    - { role: gdriveclient, when: install_gdriveclient == true }
 
   vars_files:
     - ./config.json
