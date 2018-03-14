@@ -1,0 +1,36 @@
+---
+
+- name: Check whether google client exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/GDrive"
+  register: gdrive_installed
+- name: Download and install
+  block:
+  - name: Create dir for IntelliJ
+    file:
+      path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/GDrive"
+      state: directory
+      owner: damxam
+      group: damxam
+  - name: Download
+    get_url:
+      url: https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA&export=download
+      #url: https://doc-10-a0-docs.googleusercontent.com/docs/securesc/7mh5m8gd5sgrgfb1smldekpqcgt8dd2d/jp8crphh68vmjbnusvf2tga8n1qbjpb9/1520978400000/15876260727594163214/01450348049954871657/0B3X9GlR6EmbnQ0FtZmJJUXEyRTA?e=download
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/GDrive"
+      owner: damxam
+      group: damxam
+  - name: Extract to IDEs
+    unarchive:
+      src: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/GDrive/gdrive-linux-x64"
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/GDrive"
+      remote_src: Yes
+      owner: damxam
+      group: damxam
+  # - name: Create link in /usr/bin
+  #   file:
+  #     src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
+  #     dest: /usr/bin/idea
+  #     state: link
+  #     owner: damxam
+  #     group: damxam
+  when: not gdrive_installed.stat.exists
