@@ -7,5 +7,6 @@
   pip:
     name: tensorflow
     virtualenv: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/tensorflow"
+    virtualenv_site_packages: true
   become: yes
   become_user: damxam
