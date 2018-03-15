@@ -26,12 +26,12 @@
 
 - name: Check whether minikube exists
   stat:
-    path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/bin/minikube"
+    path: "/usr/local/bin/minikube"
   register: minikube_installed
 - name: Download minikube
   get_url:
     url:  "https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64"
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/bin/minikube"
+    dest: "/usr/local/bin/minikube"
     mode: 0755
     owner: damxam
     group: damxam

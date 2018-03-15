@@ -72,6 +72,7 @@ alias kafkaoff='~/Workspaces/Libraries/Kafka/kafka_2.12-1.0.1/bin/kafka-server-s
 
 ## kubernetes
 alias deletePods='kubectl delete --all pods'
+alias deleteJobs='kubectl delete --all jobs'
 alias minikubeon='minikube start --vm-driver none'
 alias minikubeoff='minikube stop'
 
