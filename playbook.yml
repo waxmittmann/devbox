@@ -16,6 +16,7 @@
     - { role: anaconda, when: install_anaconda == true }
     - { role: intellij, when: install_intellij == true }
     - { role: kafka, when: install_kafka == true }
+    - { role: kubernetes, when: install_kubernetes == true }
 
   vars_files:
     - ./config.json

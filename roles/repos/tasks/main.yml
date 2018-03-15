@@ -2,7 +2,7 @@
 # Do not overwrite if already exists with local changes; that errors, so ignore.
 - name: "Download devbox repo"
   git:
-    repo: "https://github.com/waxmittmann/devbox.git"
+    repo: "git@github.com:waxmittmann/devbox.git"
     dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
     accept_hostkey: True
     force: no
@@ -12,7 +12,7 @@
 
 - name: "Download github repos"
   git:
-    repo: "https://github.com/{{ item.path }}.git"
+    repo: "git@github.com:waxmittmann/{{ item.path }}.git"
     dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
     accept_hostkey: True
     force: no
@@ -20,8 +20,8 @@
   become_user: damxam
   ignore_errors: yes
   with_items:
-    - { path: 'waxmittmann/neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
-    - { path: 'waxmittmann/workflowManagers', type: 'Experimental', name: 'workflowManagers' }
+    - { path: 'neo4j-movies-java-bolt', type: 'Experimental', name: 'neo4j-movies-java-bolt' }
+    - { path: 'workflowManagers', type: 'Experimental', name: 'workflowManagers' }
 
 - name: "Download gitlab repos (private, so needs valid ssh key)"
   git:

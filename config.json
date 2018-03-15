@@ -4,5 +4,6 @@
   "install_intellij": true,
   "install_foxitreader": true,
   "install_tensorflow": false,
-  "install_kafka": false
+  "install_kafka": false,
+  "install_kubernetes": false
 }

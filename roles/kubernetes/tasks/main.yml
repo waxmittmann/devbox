@@ -1,0 +1,37 @@
+---
+
+- name: Check whether kubectl exists
+  stat:
+    path: "/usr/local/bin/kubectl"
+  register: kubernetes_installed
+
+- name: Download kubernetes
+  block:
+  - name: Get current version
+    uri:
+      url: https://storage.googleapis.com/kubernetes-release/release/stable.txt
+      return_content: yes
+    register: version
+#  - debug:
+#    msg: "version is {{ version }}"
+  - name: Download
+    get_url:
+#      curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      url:  "https://storage.googleapis.com/kubernetes-release/release/{{ version.content | replace('\n', '') }}/bin/linux/amd64/kubectl"
+      dest: "/usr/local/bin"
+      mode: 0755
+      owner: damxam
+      group: damxam
+  when: not kubernetes_installed.stat.exists
+
+- name: Check whether minikube exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/bin/minikube"
+  register: minikube_installed
+- name: Download minikube
+  get_url:
+    url:  "https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64"
+    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/bin/minikube"
+    mode: 0755
+    owner: damxam
+    group: damxam
