@@ -4,6 +4,8 @@
 ## Go places
 alias goh='cd ~'
 alias govnote='cd ~/Workspaces/Notes/VersionedNotes'
+alias openvnote='atom ~/Workspaces/Notes/VersionedNotes'
+alias gcvnote='~/Workspaces/Notes/VersionedNotes/std.sh'
 alias gonote='cd ~/Workspaces/Notes'
 
 alias gows='cd ~/Workspaces'
@@ -18,9 +20,9 @@ alias psj='ps -A | grep java'
 ## Do stuff with zsh
 # Todo: this should change the devbox file and then copy that across
 alias srcsh='source ~/.zshrc'
-alias opensh='atom ~/.oh-my-zsh/custom/customs.zsh'
+alias opensh='atom ~/Workspaces/Projects/Useful/devbox/files/customs.zsh'
 alias catsh='cat ~/.oh-my-zsh/custom/customs.zsh'
-alias gosh='cd ~/.oh-my-zsh/custom/'
+alias gosh='cd ~/Workspaces/Projects/Useful/devbox/files/customs.zsh'
 alias savesh=''
 
 ## Github
