@@ -27,8 +27,8 @@
       group: damxam
   - name: "Optional: Create link in /usr/bin"
     file:
-      src: "{{ install_dir }}/{{ extract_dir }}/{{ binary_path }}"
-      dest: "/usr/bin/{{ sym_link }}"
+      src: "{{ install_dir }}/{{ extract_dir }}/{{ sym_link.binary_path }}"
+      dest: "/usr/bin/{{ sym_link.link_name }}"
       state: link
       owner: damxam
       group: damxam
