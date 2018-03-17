@@ -1,0 +1,17 @@
+---
+# Install intellij
+# Todo: Check that the folder contains something
+
+- debug:
+    msg: "Hi {{ item_path }} {{ role_to_run }}"
+    # msg: "Hi {{ item_path }} "
+# - name: Check
+#   stat:
+#     path: "{{ item_path }}"
+#   register: item_installed
+# - name: Install
+#   include_role:
+#     name: "{{ role_to_run }}"
+#     vars:
+#       item_path: "{{ item_path }}"
+#   when: not item_installed.stat.exists

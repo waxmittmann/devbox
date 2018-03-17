@@ -1,0 +1,10 @@
+---
+# Install intellij
+# Todo: Check that the folder contains something
+
+- name: Install
+  include_role:
+    name: if_not_exists
+  vars:
+    role_to_run: "work"
+    item_path: "{{ lookup('env', 'HOME') }}/Workspaces/Temporary"

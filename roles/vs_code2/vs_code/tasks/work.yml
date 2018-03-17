@@ -1,0 +1,6 @@
+---
+# Install intellij
+# Todo: Check that the folder contains something
+
+- debug:
+    text: "Installing dir {{ item_path }}"
