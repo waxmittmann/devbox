@@ -1,0 +1,36 @@
+---
+
+- name: Check whether directory exists
+  stat:
+    path: "{{ install_dir }}/{{ extract_dir }}"
+  register: installed
+- name: Do download and install
+  block:
+  - name: Create dir
+    file:
+      path: "{{ install_dir }}"
+      state: directory
+      owner: damxam
+      group: damxam
+  - name: Download to dir
+    get_url:
+      url: "{{ download_url }}"
+      dest: "{{ install_dir }}"
+      owner: damxam
+      group: damxam
+  - name: Extract to dir
+    unarchive:
+      src: "{{ install_dir }}/{{ download_filename }}"
+      dest: "{{ install_dir }}"
+      remote_src: Yes
+      owner: damxam
+      group: damxam
+  - name: "Optional: Create link in /usr/bin"
+    file:
+      src: "{{ install_dir }}/{{ extract_dir }}/{{ binary_path }}"
+      dest: "/usr/bin/{{ sym_link }}"
+      state: link
+      owner: damxam
+      group: damxam
+    when: sym_link is defined
+  when: not installed.stat.exists

@@ -17,6 +17,7 @@
     - { role: intellij, when: install_intellij == true }
     - { role: kafka, when: install_kafka == true }
     - { role: kubernetes, when: install_kubernetes == true }
+    - { role: vs_code, when: install_vs_code == true }
 
   vars_files:
     - ./config.json

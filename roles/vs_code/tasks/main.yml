@@ -1,0 +1,18 @@
+---
+# Install intellij
+# Todo: Check that the folder contains something
+
+- name: Install
+  include_role:
+    name: install_if_missing
+  vars:
+    # Todo: these two should be a dictionary
+    install_dir: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs"
+    extract_dir: VSCode-linux-x64
+
+    download_url: "https://vscode-update.azurewebsites.net/latest/linux-x64/stable"
+    download_filename: "code-stable-code_1.21.1-1521038896_amd64.tar.gz"
+
+    # Todo: these two should be a dictionary
+    sym_link: vscode
+    binary_path: "bin/code"
