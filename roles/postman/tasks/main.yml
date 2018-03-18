@@ -1,0 +1,39 @@
+---
+
+- name: Check whether postman exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/Postman"
+  register: is_installed
+
+- name: Download and extract postman
+  block:
+  # - name: Create dir
+  #   file:
+  #     path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/Postman"
+  #     state: directory
+  #     owner: damxam
+  #     group: damxam
+  - name: Download
+    get_url:
+      url:  "https://dl.pstmn.io/download/latest/linux64"
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/postman.tar.gz"
+      mode: 0755
+      owner: damxam
+      group: damxam
+  - name: Extract
+    unarchive:
+      src: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/postman.tar.gz"
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/"
+      remote_src: Yes
+      mode: 0755
+      owner: damxam
+      group: damxam
+  - name: Create link in /usr/bin
+    file:
+      src: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/Postman/Postman"
+      dest: /usr/bin/postman
+      state: link
+      owner: damxam
+      group: damxam
+
+  when: not is_installed.stat.exists

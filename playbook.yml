@@ -18,6 +18,7 @@
     - { role: kafka, when: install_kafka == true }
     - { role: kubernetes, when: install_kubernetes == true }
     - { role: vs_code, when: install_vs_code == true }
+    - { role: postman, when: install_postman == true }
 
   vars_files:
     - ./config.json

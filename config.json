@@ -6,5 +6,9 @@
   "install_tensorflow": false,
   "install_kafka": false,
   "install_kubernetes": false,
+<<<<<<< 2f2e627aa2de1eb52bbeacd63b8c10683989ff6f
   "install_vs_code": true
+=======
+  "install_postman": true
+>>>>>>> Install postman
 }
