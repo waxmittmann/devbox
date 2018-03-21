@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: "WORKFLOW IS: {{ workspace_dir }}"
+
 - name: Install virtualenv
   pip:
     name: virtualenv

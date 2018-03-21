@@ -5,51 +5,11 @@
     - name: Create Install dir where we'll store all our binaries
       file: path=/AnsibleInstall state=directory
 
-  roles:
-    - sshkey
-    - workspace
-    - zsh
-    - aptinstalls
-    - { role: tensorflow, when: install_tensorflow == true }
-    - { role: foxitreader, when: install_foxitreader == true }
-    - { role: repos, when: install_repos == true }
-    - { role: anaconda, when: install_anaconda == true }
-    - { role: intellij, when: install_intellij == true }
-    - { role: kafka, when: install_kafka == true }
-    - { role: kubernetes, when: install_kubernetes == true }
-    - { role: vs_code, when: install_vs_code == true }
-    - { role: postman, when: install_postman == true }
-
   vars_files:
     - ./config.json
 
   sudo: true
 
   tasks:
-      # Set git stuff
-    - name: "Set git stuff"
-      block:
-      - name: "Set git user email"
-        shell: git config --global user.email "damxam@gmail.com"
-        become: yes
-        become_user: damxam
-      - name: "Set git user name"
-        shell: git config --global user.name "Max Wittmann"
-        become: yes
-        become_user: damxam
-
-    - name: "Add user to vboxsf group (virtualbox-specific)"
-      command: "adduser damxam vboxsf"
-      ignore_errors: yes
-
-    - name: "Add user to docker group"
-      command: "adduser damxam docker"
-
-    # This will fail / be useless on non-nautilus distros; should start adding
-    # some conditional logic
-    - name: "Set my custom nautilus bookmarks (warning, overwrites existing)"
-      copy:
-        src: files/bookmarks
-        dest: /home/damxam/.config/gtk-3.0
-        owner: damxam
-        group: damxam
+    - debug:
+        msg: "Workspace dir is: {{ workspace_dir }}"
