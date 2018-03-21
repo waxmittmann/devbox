@@ -2,14 +2,14 @@
 
 - name: Check whether Kafka exists
   stat:
-    path: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Kafka"
+    path: "{{ workspace_dir }}/Libraries/Kafka"
   register: kafka_installed
 
 - name: Download and install kafka
   block:
   - name: Create dir for Zookeeper
     file:
-      path: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Kafka"
+      path: "{{ workspace_dir }}/Libraries/Kafka"
       state: directory
       owner: damxam
       group: damxam
@@ -23,14 +23,14 @@
   - name: Download Kafka
     get_url:
       url: http://apache.melbourneitmirror.net/kafka/1.0.1/kafka_2.12-1.0.1.tgz
-      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Kafka"
+      dest: "{{ workspace_dir }}/Libraries/Kafka"
       owner: damxam
       group: damxam
 
   - name: Extract
     unarchive:
-      src: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Kafka/kafka_2.12-1.0.1.tgz"
-      dest: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Kafka"
+      src: "{{ workspace_dir }}/Libraries/Kafka/kafka_2.12-1.0.1.tgz"
+      dest: "{{ workspace_dir }}/Libraries/Kafka"
       remote_src: Yes
       owner: damxam
       group: damxam

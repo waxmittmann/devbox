@@ -3,7 +3,7 @@
   include_role:
     name: install_if_missing
   vars:
-    install_dir: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs"
+    install_dir: "{{ workspace_dir }}/IDEs"
     extract_dir: VSCode-linux-x64
 
     download_url: "https://vscode-update.azurewebsites.net/latest/linux-x64/stable"

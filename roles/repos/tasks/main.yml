@@ -3,7 +3,7 @@
 - name: "Download devbox repo"
   git:
     repo: "git@github.com:waxmittmann/devbox.git"
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/Useful/devbox"
+    dest: "{{ workspace_dir }}/Projects/Useful/devbox"
     accept_hostkey: True
     force: no
   become: yes
@@ -13,7 +13,7 @@
 - name: "Download github repos"
   git:
     repo: "git@github.com:waxmittmann/{{ item.path }}.git"
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Projects/{{ item.type }}/{{ item.name }}"
+    dest: "{{ workspace_dir }}/Projects/{{ item.type }}/{{ item.name }}"
     accept_hostkey: True
     force: no
   become: yes
@@ -26,7 +26,7 @@
 - name: "Download gitlab repos (private, so needs valid ssh key)"
   git:
     repo: "git@gitlab.com:damxam/{{ item.repo }}.git"
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Notes/{{ item.path }}"
+    dest: "{{ workspace_dir }}/Notes/{{ item.path }}"
     accept_hostkey: True
     force: no
   become: yes

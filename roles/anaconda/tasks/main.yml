@@ -4,7 +4,7 @@
 
 - name: Check whether Anaconda exists
   stat:
-    path: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/Anaconda"
+    path: "{{ workspace_dir }}/Libraries/Anaconda"
   register: anaconda_installed
 - name: Download Anaconda
   get_url:

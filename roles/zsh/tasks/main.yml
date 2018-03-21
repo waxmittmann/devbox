@@ -26,6 +26,6 @@
 - name: Copy zsh cheat sheet
   copy:
     src: ./files/zshCheatsheet.txt
-    dest: "{{ lookup('env', 'HOME') }}/Workspaces/Misc/zshCheatsheet.txt"
+    dest: "{{ workspace_dir }}/Misc/zshCheatsheet.txt"
     owner: damxam
     group: damxam

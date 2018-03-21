@@ -1,7 +1,4 @@
 ---
-- debug:
-    msg: "WORKFLOW IS: {{ workspace_dir }}"
-
 - name: Install virtualenv
   pip:
     name: virtualenv
@@ -9,7 +6,7 @@
 - name: Install tensorflow
   pip:
     name: tensorflow
-    virtualenv: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries/tensorflow"
+    virtualenv: "{{ workspace_dir }}/Libraries/tensorflow"
     virtualenv_site_packages: true
   become: yes
   become_user: damxam

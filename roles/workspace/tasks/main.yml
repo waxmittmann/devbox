@@ -4,23 +4,23 @@
 
 - name: create Workspace and notes dirs
   file:
-    path: "{{ lookup('env', 'HOME') }}/{{ item }}"
+    path: "{{ workspace_dir }}/{{ item }}"
     state: directory
     owner: damxam
     group: damxam
     mode: 0775
   with_items: [
-    "/Workspaces/",
-    "/Workspaces/Notes/",
-    "/Workspaces/IDEs",
-    "/Workspaces/Misc",
-    "/Workspaces/Tools",
-    "/Workspaces/Tools/bin",
-    "/Workspaces/Data",
-    "/Workspaces/Libraries",
-    "/Workspaces/Libraries/bin",
-    "/Workspaces/Projects",
-    "/Workspaces/Projects/Useful",
-    "/Workspaces/Projects/Experimental",
-    "/Workspaces/Projects/Learning"
+    "",
+    "Notes/",
+    "IDEs",
+    "Misc",
+    "Tools",
+    "Tools/bin",
+    "Data",
+    "Libraries",
+    "Libraries/bin",
+    "Projects",
+    "Projects/Useful",
+    "Projects/Experimental",
+    "Projects/Learning"
   ]

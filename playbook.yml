@@ -5,6 +5,21 @@
     - name: Create Install dir where we'll store all our binaries
       file: path=/AnsibleInstall state=directory
 
+  roles:
+    - sshkey
+    - workspace
+    - zsh
+    - aptinstalls
+    - { role: tensorflow, when: install_tensorflow == true }
+    - { role: foxitreader, when: install_foxitreader == true }
+    - { role: repos, when: install_repos == true }
+    - { role: anaconda, when: install_anaconda == true }
+    - { role: intellij, when: install_intellij == true }
+    - { role: kafka, when: install_kafka == true }
+    - { role: kubernetes, when: install_kubernetes == true }
+    - { role: vs_code, when: install_vs_code == true }
+    - { role: postman, when: install_postman == true }
+
   vars_files:
     - ./config.json
 
