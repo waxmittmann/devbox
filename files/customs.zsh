@@ -1,6 +1,9 @@
 #### My stuff ####
 
 # Permanent Aliases
+## devbox (Will need to be adjusted for workspace)
+alias runDevbox='~/Workspaces/Projects/Useful/devbox/run.sh'
+
 ## Go places
 alias goh='cd ~'
 alias govnote='cd ~/Workspaces/Notes/VersionedNotes'
