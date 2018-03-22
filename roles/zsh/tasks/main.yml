@@ -7,8 +7,14 @@
   file:
     path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
     state: absent
+# - name: Copy my custom zsh stuff in
+#   copy:
+#     src: ./files/customs.zsh
+#     dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
+#     owner: damxam
+#     group: damxam
 - name: Copy my custom zsh stuff in
-  copy:
+  template:
     src: ./files/customs.zsh
     dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
     owner: damxam
