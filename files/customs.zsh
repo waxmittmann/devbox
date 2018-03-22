@@ -9,6 +9,11 @@ alias gcvnote='~/Workspaces/Notes/VersionedNotes/std.sh'
 alias gonote='cd ~/Workspaces/Notes'
 
 alias gows='cd ~/Workspaces'
+alias gows='cd ~/Workspaces'
+alias gotool='cd ~/Workspaces/Tools'
+alias goide='cd ~/Workspaces/IDEs'
+alias golib='cd ~/Workspaces/Libraries'
+
 alias gop='cd ~/Workspaces/Projects'
 alias gouse='cd ~/Workspaces/Projects/Useful'
 alias goexp='cd ~/Workspaces/Projects/Experimental'
