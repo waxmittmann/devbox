@@ -21,7 +21,7 @@
     - { role: postman, when: install_postman == true }
 
   vars_files:
-    - ./config.json
+    - ./configs/config.json
 
   sudo: true
 

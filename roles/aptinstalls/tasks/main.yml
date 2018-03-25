@@ -40,27 +40,16 @@
   - name: install java 8
     apt: name=oracle-java8-installer state=present force=yes
 
+- name: Read apt items
+  include_vars:
+    file: ./configs/aptinstalls.yml
+
 - name: install things via apt
   apt:
     name: "{{ item }}"
     state: present
     force: yes
-  with_items: [
-    "atom",
-    "git",
-    "gitk",
-    "python-pip",
-    "terminator",
-    "vagrant",
-    "zsh",
-    "sbt",
-    "xclip",
-    "neo4j",
-    "docker.io",
-    "maven",
-    "virtualbox",
-    "snapd"
-  ]
+  with_items: "{{ aptinstall_items }}"
 
 # - name: "Install virtualbox guest additions (TODO: Make virtualbox only)"
 #   apt:

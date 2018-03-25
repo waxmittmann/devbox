@@ -1,0 +1,19 @@
+aptinstall_items:
+  [
+    "atom",
+    "git",
+    "gitk",
+    "python-pip",
+    "terminator",
+    "vagrant",
+    "zsh",
+    "sbt",
+    "xclip",
+    "neo4j",
+    "docker.io",
+    "maven",
+    "virtualbox",
+    "snapd",
+    "nodejs",
+    "npm"
+  ]

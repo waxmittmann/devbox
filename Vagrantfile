@@ -1,3 +1,5 @@
+# TODO: Hopelessly obsolete
+
 VAGRANTFILE_API_VERSION = "2"
 
 # if !Vagrant.has_plugin?("vagrant-proxyconf")
