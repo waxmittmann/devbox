@@ -4,6 +4,10 @@
 ## devbox (Will need to be adjusted for workspace)
 alias runDevbox='{{ workspace_dir }}/Projects/Useful/devbox/run.sh'
 
+## docker
+function rmimgfn () { docker image rm -f $(docker images $1 -q) }
+alias rmimg=rmimgfn
+
 ## Go places
 alias goh='cd ~'
 alias govnote='cd {{ workspace_dir }}/Notes/VersionedNotes'
