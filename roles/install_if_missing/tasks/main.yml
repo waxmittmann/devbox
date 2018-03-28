@@ -1,8 +1,19 @@
 ---
 
+# Todo: This check should use installed_to_dir
+- name: "Set installed_to_dir"
+  block:
+  - name: "If renaming extracted dir, use renamed name for final dir"
+    set_fact:
+      installed_to_dir: "{{ rename_to_dir }}"
+    when: rename_to_dir is defined
+  - name: "Else, use extracted-to directory"
+    set_fact:
+      installed_to_dir: "{{ extract_dir }}"
+    when: rename_to_dir is not defined
 - name: Check whether directory exists
   stat:
-    path: "{{ install_dir }}/{{ extract_dir }}"
+    path: "{{ install_dir }}/{{ installed_to_dir }}"
   register: installed
 - name: Do download and install
   block:
@@ -27,18 +38,8 @@
       group: damxam
 
   - name: "Optional: Rename the extracted dir"
-    block:
-      - name: "Do rename"
-        command: "mv {{ install_dir }}/{{ extract_dir }} {{ install_dir }}/{{ rename_to_dir }}"
-      - name: "Set installed_to_dir"
-        set_fact:
-          installed_to_dir: "{{ rename_to_dir }}"
+    command: "mv {{ install_dir }}/{{ extract_dir }} {{ install_dir }}/{{ rename_to_dir }}"
     when: rename_to_dir is defined
-
-  - name: "Else, use extracted-to directory"
-    set_fact:
-      installed_to_dir: "{{ extract_dir }}"
-    when: rename_to_dir is not defined
 
   - name: "Optional: Create link in /usr/bin"
     file:
