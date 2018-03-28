@@ -1,0 +1,16 @@
+---
+- name: Install
+  include_role:
+    name: install_if_missing
+  vars:
+    install_dir: "{{ lookup('env', 'HOME') }}/Workspaces/Tools"
+    extract_dir: linux-amd64
+    rename_to_dir: helm
+
+    download_url: "https://storage.googleapis.com/kubernetes-helm/helm-v2.8.2-linux-amd64.tar.gz"
+    download_filename: "helm-v2.8.2-linux-amd64.tar.gz"
+
+    sym_link: {
+      link_name: helm,
+      binary_path: "bin/helm.sh"
+    }

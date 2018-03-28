@@ -6,20 +6,21 @@
       file: path=/AnsibleInstall state=directory
 
   roles:
-    - sshkey
-    - workspace
-    - zsh
-    - aptinstalls
-    - { role: tensorflow, when: install_tensorflow == true }
-    - { role: foxitreader, when: install_foxitreader == true }
-    - { role: repos, when: install_repos == true }
-    - { role: anaconda, when: install_anaconda == true }
-    - { role: intellij, when: install_intellij == true }
-    - { role: kafka, when: install_kafka == true }
-    - { role: kubernetes, when: install_kubernetes == true }
-    - { role: vs_code, when: install_vs_code == true }
-    - { role: postman, when: install_postman == true }
-    - { role: smartgit, when: install_smartgit == true }
+    # - sshkey
+    # - workspace
+    # - zsh
+    # - aptinstalls
+    # - { role: tensorflow, when: install_tensorflow == true }
+    # - { role: foxitreader, when: install_foxitreader == true }
+    # - { role: repos, when: install_repos == true }
+    # - { role: anaconda, when: install_anaconda == true }
+    # - { role: intellij, when: install_intellij == true }
+    # - { role: kafka, when: install_kafka == true }
+    # - { role: kubernetes, when: install_kubernetes == true }
+    # - { role: vs_code, when: install_vs_code == true }
+    # - { role: postman, when: install_postman == true }
+    # - { role: smartgit, when: install_smartgit == true }
+    - { role: helm, when: install_helm == true }
 
   vars_files:
     - ./configs/config.json
