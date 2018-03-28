@@ -8,5 +8,7 @@
   "install_kubernetes": false,
   "install_vs_code": false,
   "install_postman": true,
+  "install_smartgit": true,
+  
   "workspace_dir": "{{ lookup('env', 'HOME') }}/Workspaces"
 }

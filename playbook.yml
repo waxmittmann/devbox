@@ -19,6 +19,7 @@
     - { role: kubernetes, when: install_kubernetes == true }
     - { role: vs_code, when: install_vs_code == true }
     - { role: postman, when: install_postman == true }
+    - { role: smartgit, when: install_smartgit == true }
 
   vars_files:
     - ./configs/config.json

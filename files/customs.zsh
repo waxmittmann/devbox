@@ -95,6 +95,9 @@ alias npmi='npm install'
 alias npms='npm start'
 alias bower='bower install'
 
+## Directory traversal and so forth
+alias back='cd -'
+
 ## XClip (command output to clipboard)
 alias clip="xclip -selection c"
 
