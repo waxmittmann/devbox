@@ -12,5 +12,5 @@
 
     sym_link: {
       link_name: helm,
-      binary_path: "bin/helm.sh"
+      binary_path: "helm"
     }
