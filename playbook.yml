@@ -34,11 +34,20 @@
   sudo: true
 
   tasks:
-    - include_role:
-        name: do_if_not_success
-      vars:
-        role_to_run: helm
-      when: install_helm == true
+    # - include_role: { name: do_if_not_success }
+    #   vars: { role_to_run: helm }
+    #   when: install_helm == true
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install_tensorflow == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: foxitreader }, when: install_foxitreader == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: repos }, when: install_repos == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: anaconda }, when: install_anaconda == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: intellij }, when: install_intellij == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: kafka }, when: install_kafka == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: kubernetes }, when: install_kubernetes == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: vs_code }, when: install_vs_code == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: postman }, when: install_postman == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: smartgit }, when: install_smartgit == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: helm }, when: install_helm == true }
 
       # Set git stuff
     - name: "Set git stuff"

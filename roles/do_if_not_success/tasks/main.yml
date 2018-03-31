@@ -13,10 +13,11 @@
 - name: 'Compare version'
   set_fact:
     # Todo: in  < 2.5 version was version_compare
-    is_up_to_date: "{{ '{{ success_version | replace('\n', '') }}' is version('3', '>=') }}"
+    # is_up_to_date: "{{ '{{ success_version | replace('\n', '') }}' is version('{{ devbox_version }}', '>=') }}"
+    is_up_to_date: "{{ '{{ success_version | replace('\n', '') }}' is version('{{ devbox_version }}', '>=') }}"
 
 - debug:
-    msg: 'comparing |{{success_version}}| >= |{{devbox_version}}| = {{ is_up_to_date }}'
+    msg: "comparing |{{success_version | replace('\n', '')}}| >= |{{devbox_version}}| = {{ is_up_to_date }}"
 
 # - debug:
 #     msg: "{{ role_to_run }}"

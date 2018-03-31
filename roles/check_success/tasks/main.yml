@@ -15,7 +15,7 @@
 - name: "Or set version to -1 (so always fails)"
   set_fact:
     # success_version: {{ lookup('file', './etc/{{ role_to_check }}') }}
-    success_version: "-1"
+    success_version: "0"
   when: not version_file_exists.stat.exists
 
 - name: Print version to stdout
