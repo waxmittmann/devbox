@@ -1,5 +1,6 @@
 {
-  "devbox_version": "1.0.0",
+  "devbox_version": "1.0.1",
+  "skip_if_success": true,
 
   "install_anaconda": false,
   "install_repos": true,
