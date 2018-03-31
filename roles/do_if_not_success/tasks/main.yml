@@ -1,8 +1,4 @@
 ---
-# variables:
-#   role_to_run
-#
-
 - name: 'Check version'
   include_role:
     name: check_success
@@ -10,18 +6,14 @@
     role_to_check: "{{ role_to_run }}"
 
 # Todo: Explode if greater
-- name: 'Compare version'
-  set_fact:
-    # Todo: in  < 2.5 version was version_compare
-    # is_up_to_date: "{{ '{{ success_version | replace('\n', '') }}' is version('{{ devbox_version }}', '>=') }}"
-    # is_up_to_date: "{{ '{{ success_version | replace('\n', '') }}' is version('{{ devbox_version }}', '>=') }}"
-    is_up_to_date: "{{ success_version is version(devbox_version, '>=') }}"
-
-- debug:
-    msg: "comparing |{{success_version | replace('\n', '')}}| >= |{{devbox_version}}| = {{ is_up_to_date }}"
-
-# - debug:
-#     msg: "{{ role_to_run }}"
+- block:
+  - name: 'Compare version'
+    set_fact:
+      # Todo: in  < 2.5 version was version_compare
+      # Note: do NOT use interpolators inside these conditions (ie don't do {{ success_version }})
+      is_up_to_date: "{{ success_version is version(devbox_version, '>=') }}"
+  - debug:
+      msg: "comparing {{success_version}} >= {{devbox_version}} = {{ is_up_to_date }}"
 
 - name: 'Run if needed'
   block:
@@ -30,7 +22,7 @@
   - name: 'Run task'
     include_role:
       name: "{{ role_to_run }}"
-    # static: no
+    # static: no (hmm what does this do?)
   - name: 'Write success'
     include_role:
       name: write_success
@@ -42,10 +34,3 @@
   debug:
     msg: 'IfSuccess: Skipping role {{ role_to_run }}'
   when: is_up_to_date
-      # role_to_complete: role_to_run
-
-
-    # - include_role:
-    #     name: do_if_not_success
-    #     role_to_run: helm
-    #   when: install_helm == true
