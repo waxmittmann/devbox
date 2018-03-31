@@ -6,7 +6,7 @@
       file: path=/AnsibleInstall state=directory
 
   vars_files:
-    - ./configs/config.json
+    - ./configs/config.yml
 
   # sudo: true
 
