@@ -1,4 +1,6 @@
-- name: Check whether IntelliJ exists
+---
+  
+- name: Check whether FoxitReader exists
   stat:
     path: "{{ lookup('env', 'HOME') }}/Workspaces/Tools/FoxitReader"
   register: foxit_installed

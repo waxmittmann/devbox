@@ -1,47 +1,28 @@
 ---
-# Install intellij
-# Todo: Check that the folder contains something
 
-- name: Check whether IntelliJ exists
-  stat:
-    path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-  register: intellij_installed
-- name: Download and install intelliJ
+- name: Install IntelliJ
+  include_role:
+    name: install_if_missing
+  vars:
+    install_dir: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs"
+    download_url: "https://download.jetbrains.com/idea/ideaIC-2018.1.tar.gz"
+    download_filename: "ideaIC-2018.1.tar.gz"
+    extract_dir: idea-IC-181.4203.550
+    rename_to_dir: "idea_2018.1"
+
+    sym_link: {
+      link_name: idea,
+      binary_path: "bin/idea.sh"
+    }
+
+- name: Install scala plugin
   block:
-  - name: Create dir for IntelliJ
-    file:
-      path: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-      state: directory
+  - get_url:
+      url: https://plugins.jetbrains.com/files/1347/42173/scala-intellij-bin-2017.3.11.1.zip #?updateId=42173&pluginId=1347
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/idea_2018.1"
       owner: damxam
       group: damxam
-  - name: Download intelliJ
-    get_url:
-      url: http://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz
-      dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-      owner: damxam
-      group: damxam
-  - name: Extract to IDEs
-    unarchive:
-      src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/ideaIC-2017.3.4.tar.gz"
-      dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-      remote_src: Yes
-      owner: damxam
-      group: damxam
-  - name: Install scala plugin
-    block:
-    - get_url:
-        url: https://plugins.jetbrains.com/files/1347/42173/scala-intellij-bin-2017.3.11.1.zip #?updateId=42173&pluginId=1347
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ"
-        owner: damxam
-        group: damxam
-    - unarchive:
-        src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/scala-intellij-bin-2017.3.11.1.zip"
-        dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/plugins"
-  - name: Create link in /usr/bin
-    file:
-      src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/IntelliJ/idea-IC-173.4548.28/bin/idea.sh"
-      dest: /usr/bin/idea
-      state: link
-      owner: damxam
-      group: damxam
-  when: not intellij_installed.stat.exists
+  - unarchive:
+      src: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/idea_2018.1/scala-intellij-bin-2017.3.11.1.zip"
+      dest: "{{ lookup('env', 'HOME') }}/Workspaces/IDEs/idea_2018.1/plugins"
+  when: not installed.stat.exists

@@ -23,6 +23,7 @@
       state: directory
       owner: damxam
       group: damxam
+  # Todo: Download only if not yet downloaded    
   - name: Download to dir
     get_url:
       url: "{{ download_url }}"
