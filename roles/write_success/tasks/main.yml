@@ -1,0 +1,9 @@
+---
+
+- name: "Write success"
+  # copy: content="{{ devbox_version }}" dest=./{{ role_name }}
+  copy:
+    content: "{{ devbox_version }}"
+    dest: "./{{ role_to_complete }}.success"
+    owner: damxam
+    group: damxam
