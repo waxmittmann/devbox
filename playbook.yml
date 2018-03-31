@@ -1,4 +1,5 @@
 ---
+
 - hosts: all
 
   pre_tasks:
@@ -6,9 +7,11 @@
       file: path=/AnsibleInstall state=directory
 
   vars_files:
-    - ./configs/config.yml
+    - ['./configs/localConfig.yml', './configs/config.yml']
 
-  # sudo: true
+  # vars_files:
+  #   - ./configs/config.yml
+  #   - ./configs/localConfig.yml
 
   tasks:
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install.role.tensorflow == true }
