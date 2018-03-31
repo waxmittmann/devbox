@@ -4,3 +4,4 @@ passwords.etc
 vault_pass.txt
 *.vault
 *.success
+*.retry
