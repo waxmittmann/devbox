@@ -1,0 +1,49 @@
+---
+# variables:
+#   role_to_run
+#
+
+- name: 'Check version'
+  include_role:
+    name: check_success
+  vars:
+    role_to_check: "{{ role_to_run }}"
+
+# Todo: Explode if greater
+- name: 'Compare version'
+  set_fact:
+    # Todo: in  < 2.5 version was version_compare
+    is_up_to_date: "{{ '{{ success_version | replace('\n', '') }}' is version('3', '>=') }}"
+
+- debug:
+    msg: 'comparing |{{success_version}}| >= |{{devbox_version}}| = {{ is_up_to_date }}'
+
+# - debug:
+#     msg: "{{ role_to_run }}"
+
+- name: 'Run if needed'
+  block:
+  - debug:
+      msg: "IfSuccess: Running role {{ role_to_run }}"
+  - name: 'Run task'
+    include_role:
+      name: "{{ role_to_run }}"
+    # static: no
+  - name: 'Write success'
+    include_role:
+      name: write_success
+    vars:
+      role_to_complete: "{{ role_to_run }}"
+  when: not is_up_to_date
+
+- name: 'Print if we didnt run it'
+  debug:
+    msg: 'IfSuccess: Skipping role {{ role_to_run }}'
+  when: is_up_to_date
+      # role_to_complete: role_to_run
+
+
+    # - include_role:
+    #     name: do_if_not_success
+    #     role_to_run: helm
+    #   when: install_helm == true

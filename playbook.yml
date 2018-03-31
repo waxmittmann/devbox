@@ -21,8 +21,12 @@
     # - { role: postman, when: install_postman == true }
     # - { role: smartgit, when: install_smartgit == true }
     # - { role: helm, when: install_helm == true }
-    - { role: write_success, devbox_version: 1.0.0s, role_to_complete: 'super_role' }
-    - { role: check_success, role_to_check: 'super_role' }
+    # - { role: write_success, devbox_version: 2, role_to_complete: 'super_role' }
+    # - { role: check_success, role_to_check: 'super_role' }
+    # - { role: do_if_not_success, role_to_run: helm, when: install_helm == true }
+    # - role: do_if_not_success
+    #     role_to_run: helm
+    #   when: install_helm == true
 
   vars_files:
     - ./configs/config.json
@@ -30,6 +34,12 @@
   sudo: true
 
   tasks:
+    - include_role:
+        name: do_if_not_success
+      vars:
+        role_to_run: helm
+      when: install_helm == true
+
       # Set git stuff
     - name: "Set git stuff"
       block:

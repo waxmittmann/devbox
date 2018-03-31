@@ -1,4 +1,6 @@
 {
+  "devbox_version": 3,
+
   "install_anaconda": false,
   "install_repos": true,
   "install_intellij": true,
