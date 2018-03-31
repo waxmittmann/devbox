@@ -30,12 +30,12 @@ Since the concept of a devbox involves tinkering, and re-running everything is s
 and annoying, the playbook uses the `install_if_missing` role to only run roles if:
 - they haven't been run before (in which case there will not be a `${rolename}.success` file)
 - they have been run, but there's been a version bump (so the version in
-  `${rolename}.success` < `devbox_version` which is defined in `config.json`)
+  `${rolename}.success` < `devbox.version` which is defined in `config.json`)
 
 When a role is run using `install_if_missing`, then it will write the current
 version to `${rolename}.success` after completion.
 
-To toggle this behavior off, set `skip_if_success` in `config.json` to false.
+To toggle this behavior off, set `devbox.skip_if_success` in `config.json` to false.
 
 Call `clearSuccess.sh` to remove all success flag files (or delete the ones to
   rerun manually).

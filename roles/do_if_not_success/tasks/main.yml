@@ -11,9 +11,9 @@
     set_fact:
       # Todo: in  < 2.5 version was version_compare
       # Note: do NOT use interpolators inside these conditions (ie don't do {{ success_version }})
-      is_up_to_date: "{{ skip_if_success and success_version is version(devbox_version, '>=') }}"
+      is_up_to_date: "{{ devbox.skip_if_success and success_version is version(devbox.version, '>=') }}"
   - debug:
-      msg: "comparing {{success_version}} >= {{devbox_version}} = {{ is_up_to_date }}, skip_if_success: {{ skip_if_success }}"
+      msg: "comparing {{success_version}} >= {{devbox.version}} = {{ is_up_to_date }}, skip_if_success: {{ devbox.skip_if_success }}"
 
 - name: 'Run if needed'
   block:

@@ -2,7 +2,7 @@
 
 - name: "Write success"
   copy:
-    content: "{{ devbox_version }}"
+    content: "{{ devbox.version  }}"
     dest: "./{{ role_to_complete }}.success"
     owner: damxam
     group: damxam

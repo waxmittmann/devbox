@@ -1,16 +1,18 @@
-devbox_version: "1.0.1"
-skip_if_success: true
+devbox:
+  version: "1.0.2"
+  skip_if_success: true
 
-install_anaconda: false
-install_repos: true
-install_intellij: true
-install_foxitreader: true
-install_tensorflow: false
-install_kafka: false
-install_kubernetes: false
-install_vs_code: false
-install_postman: true
-install_smartgit: true
-install_helm: true
-
-workspace_dir: "{{ lookup('env', 'HOME') }}/Workspaces"
+install:
+  workspace_dir: "{{ lookup('env', 'HOME') }}/Workspaces"
+  role:
+    anaconda: false
+    repos: true
+    intellij: true
+    foxitreader: true
+    tensorflow: false
+    kafka: false
+    kubernetes: false
+    vs_code: false
+    postman: true
+    smartgit: true
+    helm: true
