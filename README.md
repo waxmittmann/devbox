@@ -25,6 +25,11 @@ sudo ./prepare.sh   # install ansible + git, needed for playbook
 sudo ./run.sh       # run playbook
 ```
 
+## Overriding config
+Add a `localConfig.yml` to `./configs`. Note: does not merge, so update whenever
+config.yml changes. Ansible doesn't want to merge maps (hash_behavior does,
+  but is global and not recommended).
+
 ## Skipping completed steps
 Since the concept of a devbox involves tinkering, and re-running everything is slow
 and annoying, the playbook uses the `install_if_missing` role to only run roles if:
