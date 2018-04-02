@@ -7,6 +7,8 @@
       file: path=/AnsibleInstall state=directory
 
   vars_files:
+    - './configs/base.yml'
+    # localConfig will override config (completely override, NOT merge!)
     - ['./configs/localConfig.yml', './configs/config.yml']
 
   tasks:
@@ -21,32 +23,8 @@
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: postman }, when: install.role.postman == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: smartgit }, when: install.role.smartgit == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: helm }, when: install.role.helm == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: git }, when: install.role.git == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: docker }, when: install.role.docker == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: nautilus }, when: install.role.nautilus == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: virtualbox }, when: install.role.virtualbox == true }
     - { include_role: { name: zsh }, when: install.role.zsh == true } # always retry zsh since we often update shortcuts
-
-      # Set git stuff
-    - name: "Set git stuff"
-      block:
-      - name: "Set git user email"
-        shell: git config --global user.email "damxam@gmail.com"
-        become: yes
-        become_user: damxam
-      - name: "Set git user name"
-        shell: git config --global user.name "Max Wittmann"
-        become: yes
-        become_user: damxam
-
-    - name: "Add user to vboxsf group (virtualbox-specific)"
-      command: "adduser damxam vboxsf"
-      ignore_errors: yes
-
-    - name: "Add user to docker group"
-      command: "adduser damxam docker"
-
-    # This will fail / be useless on non-nautilus distros; should start adding
-    # some conditional logic
-    - name: "Set my custom nautilus bookmarks (warning, overwrites existing)"
-      copy:
-        src: files/bookmarks
-        dest: /home/damxam/.config/gtk-3.0
-        owner: damxam
-        group: damxam

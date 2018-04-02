@@ -1,0 +1,12 @@
+---
+
+# This will fail / be useless on non-nautilus distros; should start adding
+# some conditional logic
+# Todo: Should not overwrite after first being called; maybe add sentry file
+# and check for that
+- name: "Set my custom nautilus bookmarks (warning, overwrites existing)"
+  copy:
+    src: files/bookmarks
+    dest: /home/damxam/.config/gtk-3.0
+    owner: damxam
+    group: damxam

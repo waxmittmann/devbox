@@ -1,5 +1,4 @@
-devbox:
-  version: "1.0.3"
+settings:
   skip_if_success: true
 
 install:
@@ -17,3 +16,7 @@ install:
     smartgit: true
     helm: true
     zsh: true
+    git: true
+    docker: true
+    nautilus: false
+    virtualbox: true

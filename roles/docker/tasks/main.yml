@@ -1,0 +1,10 @@
+---
+
+- name: install docker via apt
+  apt:
+    name: docker.io
+    state: present
+    force: yes
+
+- name: "Add user to docker group"
+  command: "adduser damxam docker"

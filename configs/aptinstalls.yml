@@ -9,7 +9,6 @@ aptinstall_items:
     "sbt",
     "xclip",
     "neo4j",
-    "docker.io",
     "maven",
     "net-tools"
     "virtualbox",
