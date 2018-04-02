@@ -9,10 +9,6 @@
   vars_files:
     - ['./configs/localConfig.yml', './configs/config.yml']
 
-  # vars_files:
-  #   - ./configs/config.yml
-  #   - ./configs/localConfig.yml
-
   tasks:
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install.role.tensorflow == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: foxitreader }, when: install.role.foxitreader == true }
@@ -25,6 +21,7 @@
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: postman }, when: install.role.postman == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: smartgit }, when: install.role.smartgit == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: helm }, when: install.role.helm == true }
+    - { include_role: { name: zsh }, when: install.role.zsh == true } # always retry zsh since we often update shortcuts
 
       # Set git stuff
     - name: "Set git stuff"

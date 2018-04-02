@@ -1,4 +1,6 @@
 ---
+
+
 - name: 'Check version'
   include_role:
     name: check_success
@@ -23,6 +25,8 @@
     include_role:
       name: "{{ role_to_run }}"
     # static: no (hmm what does this do?)
+
+  # Todo: Write failure (for debugging; maybe could also have 'run failure only' mode)
   - name: 'Write success'
     include_role:
       name: write_success

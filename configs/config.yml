@@ -1,5 +1,5 @@
 devbox:
-  version: "1.0.2"
+  version: "1.0.3"
   skip_if_success: true
 
 install:
@@ -16,3 +16,4 @@ install:
     postman: true
     smartgit: true
     helm: true
+    zsh: true

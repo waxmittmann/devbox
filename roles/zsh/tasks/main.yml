@@ -1,6 +1,11 @@
 ---
 # Download my zsh extensions; would be nicer to update if exists maybe.
 
+- name: install zsh via apt
+  apt:
+    name: "zsh"
+    state: present
+    force: yes
 - name: install oh-my-zsh
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 - name: "Remove old customs if exists"
@@ -13,6 +18,10 @@
 #     dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/customs.zsh"
 #     owner: damxam
 #     group: damxam
+
+- debug:
+    msg: "Install is: {{ install }}"
+
 - name: Copy my custom zsh stuff in
   template:
     src: ./files/customs.zsh

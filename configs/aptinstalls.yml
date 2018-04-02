@@ -6,12 +6,12 @@ aptinstall_items:
     "python-pip",
     "terminator",
     "vagrant",
-    "zsh",
     "sbt",
     "xclip",
     "neo4j",
     "docker.io",
     "maven",
+    "net-tools"
     "virtualbox",
     "snapd",
     "nodejs",
