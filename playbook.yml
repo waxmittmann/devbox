@@ -6,6 +6,11 @@
     - name: Create Install dir where we'll store all our binaries
       file: path=/AnsibleInstall state=directory
 
+    - name: Verify Ansible version is high enough.
+      assert:
+        that: "ansible_version.full | version_compare('2.5', '>=')"
+        msg: >
+          "You must update Ansible to at least 2.5 to use this playbook."
   vars_files:
     - './configs/base.yml'
     # localConfig will override config (completely override, NOT merge!)
