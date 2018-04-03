@@ -128,3 +128,4 @@ alias tname=tnamef
 export PATH="{{ install.workspace_dir }}/Libraries/bin:{{ install.workspace_dir }}/Tools/bin:{{ install.workspace_dir }}/Libraries/Anaconda/bin:$PATH"
 export AIRFLOW_HOME="{{ install.workspace_dir }}/Libraries/airflow"
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle/"
+export GOPATH="{{ install.workspace_dir }}/Libraries/GoPath"

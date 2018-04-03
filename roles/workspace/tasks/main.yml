@@ -19,6 +19,7 @@
     "/Workspaces/Data",
     "/Workspaces/Libraries",
     "/Workspaces/Libraries/bin",
+    "/Workspaces/Libraries/GoPath",
     "/Workspaces/Projects",
     "/Workspaces/Projects/Useful",
     "/Workspaces/Projects/Experimental",

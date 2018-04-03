@@ -17,6 +17,7 @@
     - ['./configs/localConfig.yml', './configs/config.yml']
 
   tasks:
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: workspace } } # always run workspace, needed by most other things. Should make required.
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install.role.tensorflow == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: foxitreader }, when: install.role.foxitreader == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: repos }, when: install.role.repos == true }
