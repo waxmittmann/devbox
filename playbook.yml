@@ -33,4 +33,5 @@
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: docker }, when: install.role.docker == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: nautilus }, when: install.role.nautilus == true }
     - { include_role: { name: do_if_not_success }, vars: { role_to_run: virtualbox }, when: install.role.virtualbox == true }
+    - { include_role: { name: do_if_not_success }, vars: { role_to_run: pip-installs }, when: install.role.pipinstalls == true }
     - { include_role: { name: zsh }, when: install.role.zsh == true } # always retry zsh since we often update shortcuts

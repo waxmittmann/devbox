@@ -20,3 +20,4 @@ install:
     docker: true
     nautilus: false
     virtualbox: true
+    pipinstalls: true

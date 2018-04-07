@@ -1,0 +1,10 @@
+---
+
+- name: Read pip items
+  include_vars:
+    file: ./configs/pipinstalls.yml
+
+- pip:
+    name: "{{item}}"
+    state: latest
+  with_items: "{{ pip_install_items }}"
