@@ -47,3 +47,6 @@ version to `${rolename}.success` after completion.
 To toggle this behavior off, set `settings.skip_if_success` in `config.json` to false.
 
 Call `clearSuccess.sh` to remove all success flag files (or delete the ones to
+
+# Todos:
+- should be adding end-of-document marker (`...`) to the end of all files

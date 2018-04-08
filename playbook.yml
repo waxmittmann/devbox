@@ -12,26 +12,39 @@
         msg: >
           "You must update Ansible to at least 2.5 to use this playbook."
   vars_files:
+    - './configs/repos.yml'
     - './configs/base.yml'
     # localConfig will override config (completely override, NOT merge!)
     - ['./configs/localConfig.yml', './configs/config.yml']
 
   tasks:
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: workspace } } # always run workspace, needed by most other things. Should make required.
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install.role.tensorflow == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: foxitreader }, when: install.role.foxitreader == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: repos }, when: install.role.repos == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: anaconda }, when: install.role.anaconda == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: intellij }, when: install.role.intellij == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: kafka }, when: install.role.kafka == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: kubernetes }, when: install.role.kubernetes == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: vs_code }, when: install.role.vs_code == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: postman }, when: install.role.postman == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: smartgit }, when: install.role.smartgit == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: helm }, when: install.role.helm == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: git }, when: install.role.git == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: docker }, when: install.role.docker == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: nautilus }, when: install.role.nautilus == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: virtualbox }, when: install.role.virtualbox == true }
-    - { include_role: { name: do_if_not_success }, vars: { role_to_run: pip-installs }, when: install.role.pipinstalls == true }
-    - { include_role: { name: zsh }, when: install.role.zsh == true } # always retry zsh since we often update shortcuts
+    # - debug:
+    #     msg: " {{ item.url }} {{ item.repositories }}"
+    #   loop: "{{ hosts }}"
+    - block:
+        - debug:
+            msg: " {{ item.url }}"
+        - debug:
+            msg: "{{ item.name }}, {{ item.localDestination }}"
+          with_items: "{{ item.repositories }}"
+      with_items: "{{ hosts }}"
+
+
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: workspace } } # always run workspace, needed by most other things. Should make required.
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install.role.tensorflow == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: foxitreader }, when: install.role.foxitreader == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: repos }, when: install.role.repos == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: anaconda }, when: install.role.anaconda == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: intellij }, when: install.role.intellij == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: kafka }, when: install.role.kafka == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: kubernetes }, when: install.role.kubernetes == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: vs_code }, when: install.role.vs_code == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: postman }, when: install.role.postman == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: smartgit }, when: install.role.smartgit == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: helm }, when: install.role.helm == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: git }, when: install.role.git == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: docker }, when: install.role.docker == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: nautilus }, when: install.role.nautilus == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: virtualbox }, when: install.role.virtualbox == true }
+    # - { include_role: { name: do_if_not_success }, vars: { role_to_run: pip-installs }, when: install.role.pipinstalls == true }
+    # - { include_role: { name: zsh }, when: install.role.zsh == true } # always retry zsh since we often update shortcuts

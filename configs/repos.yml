@@ -1,0 +1,28 @@
+hosts:
+    - url: "git@github.com/waxmittmann"
+      repositories:
+        - name: ""
+          localDestination: ""
+    - url: "git@github.com/waxmittmann"
+      repositories:
+        - name: ""
+          localDestination: ""
+
+
+# hosts:
+#   [
+#     host:
+#       url: "git@github.com/waxmittmann"
+#       repositories: [
+#         repository:
+#           name: ""
+#           localDestination: ""
+#       ],
+#     host:
+#       url: "git@github.com/waxmittmann"
+#       repositories: [
+#         repository:
+#           name: ""
+#           localDestination: ""
+#       ]
+#   ]
