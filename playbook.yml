@@ -12,7 +12,6 @@
         msg: >
           "You must update Ansible to at least 2.5 to use this playbook."
   vars_files:
-    - './configs/repos.yml'
     - './configs/base.yml'
     # localConfig will override config (completely override, NOT merge!)
     - ['./configs/localConfig.yml', './configs/config.yml']
@@ -21,14 +20,22 @@
     # - debug:
     #     msg: " {{ item.url }} {{ item.repositories }}"
     #   loop: "{{ hosts }}"
-    - block:
+
+    # - block:
+    #     - debug:
+    #         msg: " {{ item.url }}"
+    #     - debug:
+    #         msg: "{{ item.name }}, {{ item.localDestination }}"
+    #       with_items: "{{ item.repositories }}"
+    #   with_items: "{{ hosts }}"
+
+    - block:juyty
         - debug:
             msg: " {{ item.url }}"
         - debug:
             msg: "{{ item.name }}, {{ item.localDestination }}"
           with_items: "{{ item.repositories }}"
       with_items: "{{ hosts }}"
-
 
     # - { include_role: { name: do_if_not_success }, vars: { role_to_run: workspace } } # always run workspace, needed by most other things. Should make required.
     # - { include_role: { name: do_if_not_success }, vars: { role_to_run: tensorflow }, when: install.role.tensorflow == true }
