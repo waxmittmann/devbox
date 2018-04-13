@@ -1,0 +1,10 @@
+---
+
+- name: Read apt items
+  include_vars:
+    file: ./configs/repos.yml
+
+- include_tasks: inner.yml
+  loop: {{ hosts }}
+
+...
