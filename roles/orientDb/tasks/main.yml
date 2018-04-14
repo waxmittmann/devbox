@@ -1,0 +1,16 @@
+---
+- name: Install
+  include_role:
+    name: install_if_missing
+  vars:
+    install_dir: "{{ lookup('env', 'HOME') }}/Workspaces/Libraries"
+    extract_dir: orientdb-community-importers-2.2.33
+
+    download_url: "https://bit.ly/orientdb-ce-imps-2-2-33-linux"
+    download_filename: "orientdb-community-importers-2.2.33.tar.gz"
+
+    sym_link: {
+      link_name: orientdb,
+      binary_path: "bin/orientdb.sh"
+    }
+...

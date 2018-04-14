@@ -21,3 +21,4 @@ install:
     nautilus: false
     virtualbox: true
     pipinstalls: true
+    orientdb: true
