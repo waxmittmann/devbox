@@ -1,4 +1,6 @@
 ---
+  # To run orientdb, go to ./bin dir and start server.
+  # Then orientdb command will work.
 - name: Install
   include_role:
     name: install_if_missing
