@@ -106,6 +106,9 @@ alias clip="xclip -selection c"
 
 ## Docker
 alias n4jdocker="docker run -p 7474:7474 -p 7687:7687 --rm neo4j"
+function dshfn () { docker exec -ti $1 /bin/bash }
+alias dsh=dshfn
+
 
 function gcheatfn () { catcheat | grep $1 }
 alias gcheat=gcheatfn
@@ -125,7 +128,7 @@ tnamef() {
 alias tname=tnamef
 
 #export PATH="/home/damxam/Workspaces/Libraries/anaconda3/bin:$PATH"
-export PATH="{{ install.workspace_dir }}/Libraries/bin:{{ install.workspace_dir }}/Tools/bin:{{ install.workspace_dir }}/Libraries/Anaconda/bin:$PATH"
 export AIRFLOW_HOME="{{ install.workspace_dir }}/Libraries/airflow"
 export JAVA_HOME="/usr/lib/jvm/java-8-oracle/"
 export GOPATH="{{ install.workspace_dir }}/Libraries/GoPath"
+export PATH="/home/damxam/Workspaces/Libraries/bin:/home/damxam/Workspaces/Tools/bin:/home/damxam/Workspaces/Libraries/Anaconda/bin:/usr/lib/go-1.10/bin:$GOPATH/bin:$PATH"
